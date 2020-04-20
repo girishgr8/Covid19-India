@@ -13,7 +13,7 @@ page = requests.get(URL)
 soup = BeautifulSoup(page.content, 'html5lib')
 # print(soup.prettify())
 table = soup.findAll('div', attrs = {'class':'table-responsive'})
-tr = table[7].find('tbody').findAll('tr')
+tr = table[0].find('tbody').findAll('tr')
 # for i in range(len(table)):
 # 	print("\t\t\t{}\n".format(str(i)))
 # 	print(table[i])
@@ -28,18 +28,18 @@ for i in range(len(tr)):
 
 # Last Row is not having any info so remove it #
 cases = cases[:-1]
-total = int(cases[-1][1][:-1])+int(cases[-1][2])
-cured = int(cases[-1][3])
-deaths = int(cases[-1][4])
+total = int(cases[-1][1][:-1])
+cured = int(cases[-1][2])
+deaths = int(cases[-1][3])
 cases = cases[:-1]
 data = []
 
 for element in cases:
 	case = {}
 	case['STATE/UT'] = element[1]
-	case['Positive'] = str(int(element[2])+int(element[3]))
-	case['Cured'] = element[4]
-	case['Deaths'] = element[5]
+	case['Positive'] = element[2]
+	case['Cured'] = element[3]
+	case['Deaths'] = element[4]
 	data.append(case)
 
 filename = 'old.csv'
@@ -70,5 +70,5 @@ def send_file(file, title):
 message = "Total number of confirmed cases: {}\n Total number of recovered cases: {}\n Total number deceased cases: {}".format(str(total),str(cured),str(deaths))
 response = send_message(message)
 assert response["ok"]
-response = send_file("old.csv", "Some data")
+response = send_file("old.csv", "New Updated Records")
 assert response["ok"]
