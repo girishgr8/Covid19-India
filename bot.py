@@ -27,7 +27,7 @@ for i in range(len(tr)):
 	cases.append(data)
 
 # Last Row is not having any info so remove it #
-cases = cases[:-1]
+cases = cases[:-2]
 total = int(cases[-1][1][:-1])
 cured = int(cases[-1][2])
 deaths = int(cases[-1][3])

@@ -1,34 +1,33 @@
 STATE/UT,Positive,Cured,Deaths
-Andaman and Nicobar Islands,15,11,0
-Andhra Pradesh,646,42,15
-Arunachal Pradesh,1,0,0
-Assam,35,17,1
-Bihar,93,42,2
-Chandigarh,26,13,0
-Chhattisgarh,36,25,0
-Delhi,2003,72,45
+Andaman and Nicobar Islands,16,11,0
+Andhra Pradesh,757,96,22
+Arunachal Pradesh,1,1,0
+Assam,35,19,1
+Bihar,126,42,2
+Chandigarh,27,14,0
+Chhattisgarh,36,26,0
+Delhi,2156,611,47
 Goa,7,7,0
-Gujarat,1743,105,63
-Haryana,233,87,3
+Gujarat,2178,139,90
+Haryana,254,127,3
 Himachal Pradesh,39,16,1
-Jammu and Kashmir,350,56,5
-Jharkhand,42,0,2
-Karnataka,390,111,16
-Kerala,402,270,3
+Jammu and Kashmir,380,81,5
+Jharkhand#,45,0,3
+Karnataka,418,129,17
+Kerala,427,307,3
 Ladakh,18,14,0
-Madhya Pradesh,1407,127,70
-Maharashtra,4203,507,223
-Manipur,2,1,0
-Meghalaya,11,0,1
+Madhya Pradesh,1552,148,76
+Maharashtra,5218,722,251
+Manipur,2,2,0
+Meghalaya,12,0,1
 Mizoram,1,0,0
-Nagaland,0,0,0
-Odisha,68,24,1
+Odisha,79,24,1
 Puducherry,7,3,0
-Punjab,219,31,16
-Rajasthan,1478,183,14
-Tamil Nadu,1477,411,15
-Telengana,844,186,18
+Punjab,245,39,16
+Rajasthan,1659,230,25
+Tamil Nadu,1596,635,18
+Telengana,928,194,23
 Tripura,2,1,0
-Uttarakhand,44,11,0
-Uttar Pradesh,1084,108,17
-West Bengal,339,66,12
+Uttarakhand,46,19,0
+Uttar Pradesh,1294,140,20
+West Bengal,423,73,15

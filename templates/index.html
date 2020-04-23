@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/
+    all.css">
+    <title>Hello, world!</title>
+    <style type="text/css">
+    body{
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		overflow-x: hidden;
+	}	
+	.list-unstyled a, .list-unstyled a span{
+		color: white;
+	}
+	.card h5{
+		padding: 1.25rem 1.25rem;
+		margin-top: 0;
+	}
+	#category a{
+		color: black;
+	}
+	.jumbotron {
+		background: #358CCE;
+		color: #FFF;
+		border-radius: 0px;
+	}
+	.jumbotron-sm { 
+		padding-top: 24px;
+		padding-bottom: 24px; 
+	}
+	.jumbotron small {
+		color: #FFF;
+	}
+	.h1 small {
+		font-size: 24px;
+	}
+	#subject{
+		height: 34px;
+	}
+	.form-control {
+		box-shadow: none;
+		border-radius: 4px;        
+        border-color: #dfe3e8;
+	}
+	.form-control:focus {
+		border-color: #29c68c;
+		box-shadow: 0 0 8px rgba(0,0,0,0.1);
+	}
+	.navbar-header.col {
+		padding: 0 !important;
+	}	
+	.navbar {
+		background: #fff;
+		padding-left: 16px;
+		padding-right: 16px;
+		border-bottom: 1px solid #dfe3e8;
+		border-radius: 0;
+	}
+	.navbar .navbar-brand {
+		font-size: 20px;
+		padding-left: 0;
+		padding-right: 50px;
+	}
+	.navbar .navbar-brand b {
+		font-weight: bold;
+		color: #29c68c;		
+	}
+	
+	.navbar ul.nav li a {
+		color: #999;
+		font-size: 16px;
+	}
+	.navbar ul.nav li a:hover, .navbar ul.nav li a:focus {
+		color: #29c68c !important;
+	}
+	.navbar ul.nav li.active > a, .navbar ul.nav li.open > a {
+		color: #26bb84 !important;
+		background: transparent !important;
+	}
+
+    .navbar .form-inline .input-group-addon {
+		box-shadow: none;
+        border-radius: 2px 0 0 2px;
+		background: #f5f5f5;
+        border-color: #dfe3e8;
+        font-size: 16px;
+        padding: 6px 10px;
+    }
+	.navbar .form-inline i {
+		font-size: 16px;
+	}
+	.navbar .form-inline .btn {
+		border-radius: 2px;
+		color: #fff;
+        border-color: #29c68c;
+		background: #29c68c;
+		outline: none;
+	}
+	    	
+	a.nav-link{
+		font-family: 'Roboto Slab';
+		font-size: 16px;
+	}
+	a.nav-link .dropdown-toggle::after{
+		margin-top: 10px;
+	}
+	.navbar .navbar-right .dropdown-toggle::after {
+		
+		display: none;
+	}
+	.navbar .dropdown-menu {
+		border-radius: 1px;
+		border-color: #e5e5e5;
+		box-shadow: 0 2px 8px rgba(0,0,0,.05);
+	}
+	.navbar .dropdown-menu li a {
+		padding: 6px 20px;
+	}
+	.navbar .navbar-right .dropdown-menu {
+		width: 505px;
+		padding: 20px;
+		left: auto;
+		right: 0;
+        font-size: 14px;
+	}
+
+	#footer-content{
+		color: #fff;
+	}
+	@media (max-width: 768px){
+		.navbar .navbar-right .dropdown-menu {
+			width: 100%;
+			background: transparent;
+			padding: 10px 20px;
+		}
+		.navbar .input-group {
+			width: 100%;
+			margin-bottom: 15px;
+		}
+		.navbar .input-group .form-control {
+			max-width: none;			
+		}
+	}
+    </style> -->
+  </head>
+  <body>
+    <!-- <nav class="navbar sticky-top navbar-default navbar-expand-lg navbar-dark bg-dark" style="border: none;">
+	<div class="navbar-header d-flex col">
+		<a class="navbar-brand" href="/home">Word<b>Flow</b></a>  		
+		<button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle navbar-toggler ml-auto">
+			<span class="navbar-toggler-icon"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+	</div>
+	
+  	{% if logged_in == True %}
+		<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start" style="width: 630px;">
+  	{% else %}
+  		<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start" style="width: 500px;">
+    {% endif %}
+	<ul class="nav navbar-nav">
+		<li class="nav-item" style="margin: 0% 15px;"><a href="/" class="nav-link"><span style="margin: 0% 8px;"><i class="fas fa-home"></i></span>Home</a></li>
+		<li class="nav-item" style="margin: 0% 10px;"><a href="/about" class="nav-link"><span style="margin: 0% 8px;"><i class="fas fa-users"></i></span>About</a></li>			
+		<li class="nav-item" style="margin: 0% 10px;"><a href="/pricing" class="nav-link"><span style="margin: 0% 8px;"><i class="fas fa-dollar-sign"></i></span>Pricing</a></li>
+		<li class="nav-item" style="margin: 0% 10px;"><a href="/contact" class="nav-link"><span style="margin: 0% 8px;"><i class="fas fa-envelope"></i></span>Contact</a></li>
+  		<li class="nav-item" style="margin: 0% 10px;"><a href="/help" class="nav-link"><span style="margin: 0% 8px;"><i class="fas fa-question-circle"></i></i></span>Help</a></li>
+	</ul>
+		
+    {% if logged_in == True %}
+    <ul class="nav navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+        <a data-toggle="dropdown" class="nav-link dropdown-toggle" href="#"><span><i class="fas fa-user"></i></span> {{ username }} </b></a>
+        <ul class="dropdown-menu">          
+          <li><a href="/profile/{{username}}" class="dropdown-item"><span style="margin: 0% 8px;"><i class="fas fa-edit"></i></span>Edit Profile</a></li>
+          <li><a href="/{{username}}/blogs" class="dropdown-item"><span style="margin: 0% 8px;"><i class="fas fa-blog"></i></span>My Blogs</a></li>
+          <li><a href="/logout" class="dropdown-item"><span style="margin: 0% 8px;"><i class="fas fa-sign-out-alt"></i></span>Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+    {% else %}
+    <ul class="nav navbar-nav navbar-right ml-auto">
+      <li class="nav-item dropdown">
+        <a data-toggle="dropdown" class="nav-link dropdown-toggle" href="#"><i class="fa fa-user"></i></span> Login</a>
+      </li>
+    </ul>
+    {% endif %}
+	</div>
+</nav> -->
+	<canvas id="dailyConfirmed" width="400" height="300"></canvas>
+	<canvas id="totalConfirmed" width="400" height="300"></canvas>
+	<canvas id="dailyRecovered" width="400" height="300"></canvas>
+	<canvas id="totalRecovered" width="400" height="300"></canvas>
+	<canvas id="dailyDeceased" width="400" height="300"></canvas>
+	<canvas id="totalDeceased" width="400" height="300"></canvas>
+<script>
+	Chart.defaults.global.responsive = false;
+	var data = JSON.parse({{ data | tojson | safe }});
+	local_dates = []
+	for(var i=0; i<data['date'].length; i++)
+		local_dates.push(new Date(data['date'][i]).toLocaleString());
+	const ctx_dc = document.getElementById('dailyConfirmed').getContext('2d');
+	const ctx_tc = document.getElementById('totalConfirmed').getContext('2d');
+	const ctx_dr = document.getElementById('dailyRecovered').getContext('2d');
+	const ctx_tr = document.getElementById('totalRecovered').getContext('2d');
+
+	var myChart = new Chart(ctx_dc, {
+	  type: 'line',
+	  data: {
+	    labels: local_dates,
+	    datasets: [{
+	      label: 'Daily Confirmed',
+	      data: data['dailyconfirmed'],
+	      backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+	      borderColor: ['rgba(255,99,132,1)'],
+	      borderWidth: 2
+	    }]
+	  },
+	  options: {
+	    scales: {
+	      xAxes: [{
+	        type: 'time'
+	      }]
+	    }
+	  }
+	});
+	// Total Recovered
+	var myChart_tc = new Chart(ctx_tc, {
+	  type: 'line',
+	  data: {
+	    labels: local_dates,
+	    datasets: [{
+	      label: 'Total Confirmed',
+	      data: data['totalconfirmed'],
+	      backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+	      borderColor: ['rgba(255,99,132,1)'],
+	      borderWidth: 2
+	    }]
+	  },
+	  options: {
+	    scales: {
+	      xAxes: [{
+	        type: 'time'
+	      }]
+	    }
+	  }
+	});
+	// Daily Recovered
+	var myChart_dr = new Chart(ctx_dr, {
+	  	type: 'line',
+	 	data: {
+	    labels: local_dates,
+	    datasets: [{
+		    label: 'Daily Recovered',
+		    data: data['dailyrecovered'],
+		    backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+		    borderColor: ['rgba(255,99,132,1)'],
+		    borderWidth: 2
+	    }]
+	  },
+	  options: {
+	    scales: {
+	      xAxes: [{
+	        type: 'time'
+	      }]
+	    }
+	  }
+	});
+
+	// Total Recovered
+	var myChart_tr = new Chart(ctx_tr, {
+	  	type: 'line',
+	 	data: {
+	    labels: local_dates,
+	    datasets: [{
+		    label: 'Total Recovered',
+		    data: data['totalrecovered'],
+		    backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+		    borderColor: ['rgba(255,99,132,1)'],
+		    borderWidth: 2
+	    }]
+	  },
+	  options: {
+	    scales: {
+	      xAxes: [{
+	        type: 'time'
+	      }]
+	    }
+	  }
+	});
+
+</script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
