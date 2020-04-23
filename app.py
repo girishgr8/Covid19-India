@@ -2,16 +2,30 @@ from flask import Flask, redirect, render_template
 import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
-from flask_moment import Moment
 import requests 
 import json
 
-# api-endpoint 
-URL = "https://api.covid19india.org/data.json"
-r = requests.get(url = URL) 
-jd = r.json()
 app = Flask(__name__)
-moment = Moment(app)
+# api-endpoint 
+data_url = "https://api.covid19india.org/data.json"
+r = requests.get(url=data_url)
+jd = r.json()
+resources_url = "https://api.covid19india.org/resources/resources.json"
+res = requests.get(url=resources_url)
+keys = set()
+testing = []
+fundraisers = []
+hospitals = []
+for k in res.json()['resources']:
+	keys.add(k['category'])
+	if k['category'] == 'CoVID-19 Testing Lab': testing.append(k)
+	if k['category'] == 'Fundraisers': fundraisers.append(k)
+	if k['category'] == 'Hospitals and centers': hospitals.append(k)
+
+# print(keys)
+# print(len(fundraisers))
+# print(len(hospitals))
+
 df = {}
 now = datetime.now()
 month_map = {'January':'01',
@@ -20,7 +34,12 @@ month_map = {'January':'01',
 			'April':'04',
 			'May':'05', 
 			'June':'06',
-			'July':'07'}
+			'July':'07',
+			'August':'08',
+			'September':'09',
+			'October':'10',
+			'November':'11',
+			'December':'12'}
 
 year = str(now.year)
 json_data = jd['cases_time_series']
@@ -33,23 +52,9 @@ for i in range(len(json_data)):
 			df[key].append(year+'-'+month_map[date[1]]+'-'+date[0])
 		else: df[key].append(json_data[i][key])
 
-# filename = 'case_time_series.csv'
-# df = pd.read_csv(filename, header=0)
-# data = pd.DataFrame()
-# dates = []
-# for d in df['Date']:
-# 	date = d.split(' ')
-# 	date_str = year+'-'+month_map[date[1]]+'-'+date[0]
-# 	# dates.append(datetime.strptime(date_str, '%d-%m-%Y').date())
-# 	dates.append(date_str)
-# data['Date'] = pd.Series(dates)
-# keys = list(df.keys())[1:]
-# data[keys] = df[keys]
-# print(data)
-
 @app.route("/")
 def home():
-	return render_template('index.html', logged_in=False, data=json.dumps(df))
+	return render_template('index.html', logged_in=False, data=json.dumps(df), tc=df['totalconfirmed'][-1], tr=df['totalrecovered'][-1], td=df['totaldeceased'][-1], dc=df['dailyconfirmed'][-1],dr=df['dailyrecovered'][-1],dd=df['dailydeceased'][-1])
     
 if __name__ == "__main__":
     app.run(debug=True)

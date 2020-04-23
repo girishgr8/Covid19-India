@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
-    <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/
-    all.css">
-    <title>Hello, world!</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+
+    <title>Covid-19 India</title>
     <style type="text/css">
     body{
 		margin: 0;
@@ -97,209 +97,261 @@
 		font-size: 16px;
 	}
 	.navbar .form-inline .btn {
-		border-radius: 2px;
+		border-radius: 5px;
 		color: #fff;
         border-color: #29c68c;
 		background: #29c68c;
 		outline: none;
 	}
-	    	
+
 	a.nav-link{
 		font-family: 'Roboto Slab';
 		font-size: 16px;
 	}
-	a.nav-link .dropdown-toggle::after{
-		margin-top: 10px;
+	.card .card-body .content{
+		margin: 12% 0%;
 	}
-	.navbar .navbar-right .dropdown-toggle::after {
-		
-		display: none;
+	.card .card-body .count-left{
+		float: left;
+		width: 49%;
+		color: white;
+		font-weight: bold;
 	}
-	.navbar .dropdown-menu {
-		border-radius: 1px;
-		border-color: #e5e5e5;
-		box-shadow: 0 2px 8px rgba(0,0,0,.05);
+	.card .card-body .content-left{
+		float: left;
+		width: 50%;
+		color: white;
+		font-weight: 400;
 	}
-	.navbar .dropdown-menu li a {
-		padding: 6px 20px;
+	.card .card-body .count-right{
+		float: right;
+		width: 49%;
+		color: white;
+		font-weight: bold;
 	}
-	.navbar .navbar-right .dropdown-menu {
-		width: 505px;
-		padding: 20px;
-		left: auto;
-		right: 0;
-        font-size: 14px;
+	.card .card-body .content-right{
+		float: left;
+		width: 50%;
+		color: white;
+		font-weight: 400;
+	}
+	.card .card-body .count-left:after {
+		content: "";
+		background-color: #fff;
+		position: absolute;
+		width: 0.5%;
+		height: 40%;
+		top: 48%;
+		left: 50%;
+		display: block;
 	}
 
-	#footer-content{
-		color: #fff;
-	}
-	@media (max-width: 768px){
-		.navbar .navbar-right .dropdown-menu {
-			width: 100%;
-			background: transparent;
-			padding: 10px 20px;
-		}
-		.navbar .input-group {
-			width: 100%;
-			margin-bottom: 15px;
-		}
-		.navbar .input-group .form-control {
-			max-width: none;			
-		}
-	}
-    </style> -->
-  </head>
-  <body>
-    <!-- <nav class="navbar sticky-top navbar-default navbar-expand-lg navbar-dark bg-dark" style="border: none;">
-	<div class="navbar-header d-flex col">
-		<a class="navbar-brand" href="/home">Word<b>Flow</b></a>  		
-		<button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle navbar-toggler ml-auto">
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
 		</button>
+		<a class="navbar-brand" href="#">Covid-19 India</a>
+		<ul class="nav navbar-nav">
+				<li class="nav-item" style="margin: 0% 10px;"><a href="/" class="nav-link"><span style="margin: 0% 10px;"><i class="fas fa-home"></i></span>Home</a></li>
+				<li class="nav-item" style="margin: 0% 10px;"><a href="/about" class="nav-link"><span style="margin: 0% 10px;"><i class="fas fa-users"></i></span>About</a></li>			
+				<li class="nav-item" style="margin: 0% 10px;"><a href="/resources" class="nav-link"><span style="margin: 0% 10px;"><i class="fas fa-folder"></i></span>Resources</a></li>
+				<li class="nav-item" style="margin: 0% 10px;"><a href="/test" class="nav-link"><span style="margin: 0% 10px;"><i class="fas fa-vial"></i></span>Testing Lab</a></li>
+				<li class="nav-item" style="margin: 0% 10px;"><a href="/help" class="nav-link"><span style="margin: 0% 10px;"><i class="fas fa-question-circle"></i></i></span>Help</a></li>
+			</ul>
+			<form class="form-inline my-2 my-lg-0" style="margin-left: 2%">
+				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</form>
+		</div>
+	</nav>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="card text-center" style="background-color: blue;">
+					<div class="card-header" style="color: white; text-transform: uppercase; font-weight: bold;">
+						Total Confirmed Cases
+					</div>
+					<div class="card-body">
+						<div class="count">
+							<div class="count-left">{{tc}}</div>
+							<div class="count-right">{{dc}}</div>
+						</div>
+						<div class="content">
+							<div class="content-left">Total</div>
+							<div class="content-right">New</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="card text-center" style="background-color: #29A746;">
+					<div class="card-header" style="color: white; text-transform: uppercase; font-weight: bold;">
+						Total Recovered Cases
+					</div>
+					<div class="card-body">
+						<div class="count">
+							<div class="count-left">{{tr}}</div>
+							<div class="count-right">{{dr}}</div>
+						</div>
+						<div class="content">
+							<div class="content-left">Recovered</div>
+							<div class="content-right">New</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card text-center" style="background-color: #6D767E;">
+					<div class="card-header" style="color: white; text-transform: uppercase; font-weight: bold;">
+						Total Deceased Cases
+					</div>
+					<div class="card-body">
+						<div class="count">
+							<div class="count-left">{{td}}</div>
+							<div class="vl"></div>
+							<div class="count-right">{{dd}}</div>
+						</div>
+						<div class="content">
+							<div class="content-left">Deceased</div>
+							<div class="content-right">New</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6"><canvas id="dailyConfirmed" width="500" height="300"></canvas></div>
+			<div class="col-md-6"><canvas id="totalConfirmed" width="500" height="300"></canvas></div>
+		</div>
+		<div class="row">
+			<div class="col-md-6"><canvas id="dailyRecovered" width="500" height="300"></canvas></div>
+			<div class="col-md-6"><canvas id="totalRecovered" width="500" height="300"></canvas></div>
+		</div>
+		<div class="row">
+			<div class="col-md-6"><canvas id="dailyDeceased" width="500" height="300"></canvas></div>
+			<div class="col-md-6"><canvas id="totalDeceased" width="500" height="300"></canvas></div>
+		</div>
 	</div>
 	
-  	{% if logged_in == True %}
-		<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start" style="width: 630px;">
-  	{% else %}
-  		<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start" style="width: 500px;">
-    {% endif %}
-	<ul class="nav navbar-nav">
-		<li class="nav-item" style="margin: 0% 15px;"><a href="/" class="nav-link"><span style="margin: 0% 8px;"><i class="fas fa-home"></i></span>Home</a></li>
-		<li class="nav-item" style="margin: 0% 10px;"><a href="/about" class="nav-link"><span style="margin: 0% 8px;"><i class="fas fa-users"></i></span>About</a></li>			
-		<li class="nav-item" style="margin: 0% 10px;"><a href="/pricing" class="nav-link"><span style="margin: 0% 8px;"><i class="fas fa-dollar-sign"></i></span>Pricing</a></li>
-		<li class="nav-item" style="margin: 0% 10px;"><a href="/contact" class="nav-link"><span style="margin: 0% 8px;"><i class="fas fa-envelope"></i></span>Contact</a></li>
-  		<li class="nav-item" style="margin: 0% 10px;"><a href="/help" class="nav-link"><span style="margin: 0% 8px;"><i class="fas fa-question-circle"></i></i></span>Help</a></li>
-	</ul>
-		
-    {% if logged_in == True %}
-    <ul class="nav navbar-nav ml-auto">
-      <li class="nav-item dropdown">
-        <a data-toggle="dropdown" class="nav-link dropdown-toggle" href="#"><span><i class="fas fa-user"></i></span> {{ username }} </b></a>
-        <ul class="dropdown-menu">          
-          <li><a href="/profile/{{username}}" class="dropdown-item"><span style="margin: 0% 8px;"><i class="fas fa-edit"></i></span>Edit Profile</a></li>
-          <li><a href="/{{username}}/blogs" class="dropdown-item"><span style="margin: 0% 8px;"><i class="fas fa-blog"></i></span>My Blogs</a></li>
-          <li><a href="/logout" class="dropdown-item"><span style="margin: 0% 8px;"><i class="fas fa-sign-out-alt"></i></span>Logout</a></li>
-        </ul>
-      </li>
-    </ul>
-    {% else %}
-    <ul class="nav navbar-nav navbar-right ml-auto">
-      <li class="nav-item dropdown">
-        <a data-toggle="dropdown" class="nav-link dropdown-toggle" href="#"><i class="fa fa-user"></i></span> Login</a>
-      </li>
-    </ul>
-    {% endif %}
-	</div>
-</nav> -->
-	<canvas id="dailyConfirmed" width="400" height="300"></canvas>
-	<canvas id="totalConfirmed" width="400" height="300"></canvas>
-	<canvas id="dailyRecovered" width="400" height="300"></canvas>
-	<canvas id="totalRecovered" width="400" height="300"></canvas>
-	<canvas id="dailyDeceased" width="400" height="300"></canvas>
-	<canvas id="totalDeceased" width="400" height="300"></canvas>
-<script>
-	Chart.defaults.global.responsive = false;
-	var data = JSON.parse({{ data | tojson | safe }});
-	local_dates = []
-	for(var i=0; i<data['date'].length; i++)
-		local_dates.push(new Date(data['date'][i]).toLocaleString());
-	const ctx_dc = document.getElementById('dailyConfirmed').getContext('2d');
-	const ctx_tc = document.getElementById('totalConfirmed').getContext('2d');
-	const ctx_dr = document.getElementById('dailyRecovered').getContext('2d');
-	const ctx_tr = document.getElementById('totalRecovered').getContext('2d');
+	<script>
+		Chart.defaults.global.responsive = false;
+		var data = JSON.parse({{ data | tojson | safe }});
+		local_dates = [];
+		for(var i=0; i<data['date'].length; i++)
+			local_dates.push(new Date(data['date'][i]).toLocaleString());
+		const options = { 
+			scales: {
+				xAxes: [{
+					type: 'time'
+				}]
+			}
+		};
+		const ctx_dc = document.getElementById('dailyConfirmed').getContext('2d');
+		const ctx_tc = document.getElementById('totalConfirmed').getContext('2d');
+		const ctx_dr = document.getElementById('dailyRecovered').getContext('2d');
+		const ctx_tr = document.getElementById('totalRecovered').getContext('2d');
+		const ctx_dd = document.getElementById('dailyDeceased').getContext('2d');
+		const ctx_td = document.getElementById('totalDeceased').getContext('2d');
 
-	var myChart = new Chart(ctx_dc, {
-	  type: 'line',
-	  data: {
-	    labels: local_dates,
-	    datasets: [{
-	      label: 'Daily Confirmed',
-	      data: data['dailyconfirmed'],
-	      backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-	      borderColor: ['rgba(255,99,132,1)'],
-	      borderWidth: 2
-	    }]
-	  },
-	  options: {
-	    scales: {
-	      xAxes: [{
-	        type: 'time'
-	      }]
-	    }
-	  }
-	});
-	// Total Recovered
-	var myChart_tc = new Chart(ctx_tc, {
-	  type: 'line',
-	  data: {
-	    labels: local_dates,
-	    datasets: [{
-	      label: 'Total Confirmed',
-	      data: data['totalconfirmed'],
-	      backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-	      borderColor: ['rgba(255,99,132,1)'],
-	      borderWidth: 2
-	    }]
-	  },
-	  options: {
-	    scales: {
-	      xAxes: [{
-	        type: 'time'
-	      }]
-	    }
-	  }
-	});
-	// Daily Recovered
-	var myChart_dr = new Chart(ctx_dr, {
-	  	type: 'line',
-	 	data: {
-	    labels: local_dates,
-	    datasets: [{
-		    label: 'Daily Recovered',
-		    data: data['dailyrecovered'],
-		    backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-		    borderColor: ['rgba(255,99,132,1)'],
-		    borderWidth: 2
-	    }]
-	  },
-	  options: {
-	    scales: {
-	      xAxes: [{
-	        type: 'time'
-	      }]
-	    }
-	  }
-	});
+		var myChart = new Chart(ctx_dc, {
+			type: 'line',
+			data: {
+				labels: local_dates,
+				datasets: [{
+					label: 'Daily Confirmed',
+					data: data['dailyconfirmed'],
+					backgroundColor: ['#FF093C'],
+					borderColor: ['#FF083B'],
+					borderWidth: 2,
+				}]
+			},
+			options: options,
+		});
+		// Total Recovered
+		var myChart_tc = new Chart(ctx_tc, {
+			type: 'line',
+			data: {
+				labels: local_dates,
+				datasets: [{
+					label: 'Total Confirmed',
+					data: data['totalconfirmed'],
+					backgroundColor: ['#FF093C'],
+					borderColor: ['#FF083B'],
+					borderWidth: 2,
+				}]
+			},
+			options: options,
+		});
+		// Daily Recovered
+		var myChart_dr = new Chart(ctx_dr, {
+			type: 'line',
+			data: {
+				labels: local_dates,
+				datasets: [{
+					label: 'Daily Recovered',
+					data: data['dailyrecovered'],
+					backgroundColor: ['#29A746'],
+					borderColor: ['#29A746'],
+					borderWidth: 2,
+				}]
+			},
+			options: options,
+		});
 
-	// Total Recovered
-	var myChart_tr = new Chart(ctx_tr, {
-	  	type: 'line',
-	 	data: {
-	    labels: local_dates,
-	    datasets: [{
-		    label: 'Total Recovered',
-		    data: data['totalrecovered'],
-		    backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-		    borderColor: ['rgba(255,99,132,1)'],
-		    borderWidth: 2
-	    }]
-	  },
-	  options: {
-	    scales: {
-	      xAxes: [{
-	        type: 'time'
-	      }]
-	    }
-	  }
-	});
+		// Total Recovered
+		var myChart_tr = new Chart(ctx_tr, {
+			type: 'line',
+			data: {
+				labels: local_dates,
+				datasets: [{
+					label: 'Total Recovered',
+					data: data['totalrecovered'],
+					backgroundColor: ['#29A746'],
+					borderColor: ['#29A746'],
+					borderWidth: 2
+				}]
+			},
+			options: options
+		});
+		// Daily Deceased
+		var myChart_dd = new Chart(ctx_dd, {
+			type: 'line',
+			data: {
+				labels: local_dates,
+				datasets: [{
+					label: 'Daily Deceased',
+					data: data['dailydeceased'],
+					backgroundColor: ['#6D767E'],
+					borderColor: ['#6D767E'],
+					borderWidth: 2
+				}]
+			},
+			options: options
+		});
+		// Total Deceased
+		var myChart_dd = new Chart(ctx_td, {
+			type: 'line',
+			data: {
+				labels: local_dates,
+				datasets: [{
+					label: 'Total Deceased',
+					data: data['totaldeceased'],
+					backgroundColor: ['#6D767E'],
+					borderColor: ['#6D767E'],
+					borderWidth: 2
+				}]
+			},
+			options: options
+		});
 
-</script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  </body>
+	</script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</body>
 </html>
