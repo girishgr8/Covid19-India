@@ -36,10 +36,11 @@ for k in res.json()['resources']:
 	if k['category'] == 'Police': police.append(k)
 
 print(keys)
-# print(len(police))
-# print(len(fundraisers))
+print(police[0])
+# print(fundraisers)
 # print(len(hospitals))
 # print(len(helpline))
+# print(seniorSupport)
 
 df = {}
 now = datetime.now()
@@ -67,14 +68,16 @@ for i in range(len(json_data)):
 			df[key].append(year+'-'+month_map[date[1]]+'-'+date[0])
 		else: df[key].append(json_data[i][key])
 
-def geocode():
-	for i in range(len(test)):
-		place = test[i]['city']+','+test[i]['state']
+def geocode(data_list, filename):
+	print("Called geocode")
+	coords = []
+	for i in range(len(data_list)):
+		place = data_list[i]['city']+','+data_list[i]['state']
 		r = requests.get(url='https://api.opencagedata.com/geocode/v1/geojson?q={}&key={}'.format(place,api_key))
 		pos = r.json()['features'][0]['geometry']['coordinates']
 		print(pos)
 		coords.append({'lat': pos[1], 'lng': pos[0]})
-	filename = 'coords.csv'
+
 	with open(filename, 'w') as f: 
 	    w = csv.DictWriter(f,['lat','lng'])
 	    w.writeheader() 
@@ -82,8 +85,8 @@ def geocode():
 	    	w.writerow(data)
 
 def testJSONData():
-	coords = []
-	coords_df = pd.read_csv('coords.csv')
+	testing_data = []
+	coords_df = pd.read_csv('testing_coords.csv')
 	for i in range(len(coords_df)):
 		c = {}
 		c['phone'] = test[i]['phonenumber'].split(',')[0]
@@ -91,10 +94,27 @@ def testJSONData():
 		c['name'] = test[i]['nameoftheorganisation']
 		c['lat'] = coords_df['lat'][i]
 		c['lng'] = coords_df['lng'][i]
-		coords.append(c)
+		testing_data.append(c)
 	 # Writing to testing_data.json
 	json_object = json.dumps(coords, indent=4)
 	with open("testing_data.json", "w") as f: 
+	    f.write(json_object)
+
+def policeJSONData():
+	police_data = []
+	coords_df = pd.read_csv('police_coords.csv')
+	for i in range(len(police)):
+		p = {}
+		p['name'] = police[i]['nameoftheorganisation']
+		p['descr'] = police[i]['descriptionandorserviceprovided']
+		p['phone'] = police[i]['phonenumber'].split(' ')[0]
+		p['contact'] = police[i]['contact']
+		p['lat'] = coords_df['lat'][i]
+		p['lng'] = coords_df['lng'][i]
+		police_data.append(p)
+	 # Writing to testing_data.json
+	json_object = json.dumps(police_data, indent=4)
+	with open("police_data.json", "w") as f: 
 	    f.write(json_object)
 
 
@@ -104,9 +124,19 @@ def home():
 
 @app.route("/testing-lab")
 def testing():
+	# geocode(test,'testing_coords.csv')
+	# testJSONData()
 	f = open('testing_data.json', 'r')
 	data = json.load(f)
 	return render_template('testing.html', data=data)
+
+@app.route("/police")
+def policeHelp():
+	# geocode(police,'police_coords.csv')
+	# policeJSONData()
+	f = open('police_data.json', 'r')
+	data = json.load(f)
+	return render_template('police.html', data=data)
     
 if __name__ == "__main__":
     app.run(debug=True)

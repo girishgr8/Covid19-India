@@ -27,14 +27,13 @@
 			marker = L.marker([latitude, longitude]).bindPopup("<b>Your location!</b>").addTo(map);
 		}
 	}
-	var test = L.icon({
-	    iconUrl: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/test-tube-227-754510.png',
+	var police = L.icon({
+	    iconUrl: 'https://cdn5.vectorstock.com/i/1000x1000/22/29/police-icon-image-vector-12902229.jpg',
 	    iconSize: [25, 35], // size of the icon
 	    popupAnchor:[0, 0] // point from which the popup should open relative to the iconAnchor
 	});
 	for (var i = 0; i<data.length; i++) {
-		console.log(data[0]);
-		marker = L.marker([parseInt(data[i]['lat']), parseInt(data[i]['lng'])], {icon: test}).bindPopup(`<b>Name:</b> ${data[i]['name']}<br><b>Contact:</b> ${data[i]['phone']}<br><b>Link:</b> <a href="${data[i]['link']}">${data[i]['link']}</a>`).addTo(map);
+		marker = L.marker([parseInt(data[i]['lat']), parseInt(data[i]['lng'])], {icon: police}).bindPopup(`<b>Name:</b> ${data[i]['name']}<br><b>Description:</b> ${data[i]['descr']}<br><b>Phone:</b> ${data[i]['phone']}<br><b>Link:</b> <a href="${data[i]['contact']}">${data[i]['contact']}</a>`).addTo(map);
 	}
 
 </script>
