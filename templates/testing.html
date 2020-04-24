@@ -1,8 +1,42 @@
 {% include 'layout.html' %}
-{% block title %}
-	<title>Testing Labs</title>	
-{% endblock %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+<style type="text/css">
+	#map{
+		height: 100%;
+	}
+</style>
 
 {% block content %}
+<div id="map"></div>
+<script type="text/javascript">
+	var latitude, longitude, marker, map = L.map('map');
+	L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+	    maxZoom: 20,
+	    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+	}).addTo(map);
+	var data = JSON.parse(JSON.stringify({{ data | tojson | safe }}));
+	console.log(data);
+	window.onload = () => {		
+  		if(navigator.geolocation) navigator.geolocation.getCurrentPosition(showPosition);
+  		else alert("Geolocation is not supported by this browser.");
+		
+		function showPosition(pos) {
+			latitude = pos.coords.latitude, longitude = pos.coords.longitude;
+			map.setView([latitude, longitude], 13);
+			marker = L.marker([latitude, longitude]).bindPopup("<b>Your location!</b>").addTo(map);
+		}
+	}
+	var test = L.icon({
+	    iconUrl: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/test-tube-227-754510.png',
+	    iconSize: [25, 40], // size of the icon
+	    popupAnchor:[0, 0] // point from which the popup should open relative to the iconAnchor
+	});
+	for (var i = 0; i<data.length; i++) {
+		console.log(data[0]);
+		marker = L.marker([parseInt(data[i]['lat']), parseInt(data[i]['lng'])], {icon: test})
+						.bindPopup(`<b>Name:</b> ${data[i]['name']}<br><b>Contact:</b> ${data[i]['phone']}<br><b>Link:</b> <a href="${data[i]['link']}">${data[i]['link']}</a>`).addTo(map);
+	}
 
+</script>
 {% endblock %}
