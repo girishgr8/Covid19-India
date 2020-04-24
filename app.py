@@ -13,16 +13,23 @@ jd = r.json()
 resources_url = "https://api.covid19india.org/resources/resources.json"
 res = requests.get(url=resources_url)
 keys = set()
-testing = []
-fundraisers = []
-hospitals = []
+testing = list()
+fundraisers = list()
+hospitals = list()
+helpline = list()
+seniorSupport = list() # len = 8
+police = list() # len = 100
 for k in res.json()['resources']:
 	keys.add(k['category'])
 	if k['category'] == 'CoVID-19 Testing Lab': testing.append(k)
 	if k['category'] == 'Fundraisers': fundraisers.append(k)
 	if k['category'] == 'Hospitals and centers': hospitals.append(k)
+	if k['category'] == 'Government Helpline': helpline.append(k)
+	if k['category'] == 'Senior Citizen Support': seniorSupport.append(k)
+	if k['category'] == 'Police': police.append(k)
 
-# print(keys)
+print(keys)
+# print(police)
 # print(len(fundraisers))
 # print(len(hospitals))
 
@@ -55,6 +62,10 @@ for i in range(len(json_data)):
 @app.route("/")
 def home():
 	return render_template('index.html', logged_in=False, data=json.dumps(df), tc=df['totalconfirmed'][-1], tr=df['totalrecovered'][-1], td=df['totaldeceased'][-1], dc=df['dailyconfirmed'][-1],dr=df['dailyrecovered'][-1],dd=df['dailydeceased'][-1])
+
+@app.route("/testing-lab")
+def testing():
+	return render_template('testing.html')
     
 if __name__ == "__main__":
     app.run(debug=True)

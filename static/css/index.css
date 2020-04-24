@@ -1,0 +1,43 @@
+.card .card-header{
+	color: white; 
+	text-transform: uppercase; 
+	font-weight: bold;
+}
+
+.card .card-body .content{
+	margin: 12% 0%;
+}
+.card .card-body .count-left{
+	float: left;
+	width: 49%;
+	color: white;
+	font-weight: bold;
+}
+.card .card-body .content-left{
+	float: left;
+	width: 50%;
+	color: white;
+	font-weight: 400;
+}
+.card .card-body .count-right{
+	float: right;
+	width: 49%;
+	color: white;
+	font-weight: bold;
+}
+.card .card-body .content-right{
+	float: left;
+	width: 50%;
+	color: white;
+	font-weight: 400;
+}
+.card .card-body .count-left:after {
+	content: "";
+	background-color: #fff;
+	position: absolute;
+	width: 0.5%;
+	height: 40%;
+	top: 48%;
+	left: 50%;
+	display: block;
+}

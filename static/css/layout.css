@@ -1,0 +1,94 @@
+body{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	overflow-x: hidden;
+}	
+.list-unstyled a, .list-unstyled a span{
+	color: white;
+}
+.card h5{
+	padding: 1.25rem 1.25rem;
+	margin-top: 0;
+}
+#category a{
+	color: black;
+}
+.jumbotron {
+	background: #358CCE;
+	color: #FFF;
+	border-radius: 0px;
+}
+.jumbotron-sm { 
+	padding-top: 24px;
+	padding-bottom: 24px; 
+}
+.jumbotron small {
+	color: #FFF;
+}
+.h1 small {
+	font-size: 24px;
+}
+#subject{
+	height: 34px;
+}
+.form-control {
+	box-shadow: none;
+	border-radius: 4px;        
+	border-color: #dfe3e8;
+}
+.form-control:focus {
+	border-color: #29c68c;
+	box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+.navbar-header.col {
+	padding: 0 !important;
+}	
+.navbar {
+	background: #fff;
+	padding-left: 16px;
+	padding-right: 16px;
+	border-bottom: 1px solid #dfe3e8;
+	border-radius: 0;
+}
+
+a .navbar-brand{
+	font-family: 'Roboto Slab';
+	font-weight: bold;
+}
+
+.navbar ul.nav li a {
+	color: #999;
+	font-size: 16px;
+}
+.navbar ul.nav li a:hover, .navbar ul.nav li a:focus {
+	color: #29c68c !important;
+}
+.navbar ul.nav li.active > a, .navbar ul.nav li.open > a {
+	color: #26bb84 !important;
+	background: transparent !important;
+}
+
+.navbar .form-inline .input-group-addon {
+	box-shadow: none;
+	border-radius: 2px 0 0 2px;
+	background: #f5f5f5;
+	border-color: #dfe3e8;
+	font-size: 16px;
+	padding: 6px 10px;
+}
+.navbar .form-inline i {
+	font-size: 16px;
+}
+.navbar .form-inline .btn {
+	border-radius: 5px;
+	color: #fff;
+	border-color: #29c68c;
+	background: #29c68c;
+	outline: none;
+}
+
+a.nav-link{
+	font-family: 'Roboto Slab';
+	font-size: 16px;
+}
