@@ -1,3 +1,6 @@
+body{
+	background-color: #F0F0F0;
+}
 .card .card-header{
 	color: white; 
 	text-transform: uppercase; 
@@ -41,3 +44,48 @@
 	left: 50%;
 	display: block;
 }
+.cards-side{
+	width: 100%;
+	display: inline-block;
+}
+
+.card-side .card-side-left{
+	float: left;
+	width: 84%;
+}
+
+.card-side .card-side-right{
+	float: right;
+	width: 16%;
+	height: 20%; 
+	background-color: white; 
+	text-align: center;
+	transform: translateY(-50%);
+	position: relative;
+	border-radius: 10%; 
+	padding: 3% 0%;
+	color: red;
+	font-weight: bold;
+}
+
+.container .outer {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  background-color: #356DE4;
+  min-height: 12%;
+  border-radius: 10px;
+}
+
+.container .outer .inner{
+	background-color: #358EE4;
+	padding: 1% 4%;
+	color: white;
+	border-radius: 10px;
+	font-weight: bold;
+}
+
+#state-row{
+	margin: 0% 1.5%;
+}
+

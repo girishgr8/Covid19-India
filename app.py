@@ -1,14 +1,14 @@
 from flask import Flask, redirect, render_template
 import pandas as pd
 import matplotlib.pyplot as plt
-from datetime import datetime
+from datetime import datetime, date
 import requests 
 import json
 import os
 import csv
+import math
 from dotenv import load_dotenv
 load_dotenv()
-
 
 app = Flask(__name__)
 # api-endpoint 
@@ -18,6 +18,14 @@ jd = r.json()
 resources_url = "https://api.covid19india.org/resources/resources.json"
 res = requests.get(url=resources_url)
 api_key = os.getenv("GEOCODING_KEY") # for getting api key of places API
+state_data = requests.get(url="https://api.covid19india.org/v2/state_district_wise.json").json()
+
+def countDays(date1, date2): 
+    return (date2-date1).days
+
+date1 = date(2020, 1, 30) 
+date2 = date.today()
+
 keys = set()
 test = list()
 fundraisers = list() # len = 57
@@ -35,8 +43,8 @@ for k in res.json()['resources']:
 	if k['category'] == 'Senior Citizen Support': seniorSupport.append(k)
 	if k['category'] == 'Police': police.append(k)
 
-print(keys)
-print(police[0])
+# print(keys)
+# print(police[0])
 # print(fundraisers)
 # print(len(hospitals))
 # print(len(helpline))
@@ -69,7 +77,6 @@ for i in range(len(json_data)):
 		else: df[key].append(json_data[i][key])
 
 def geocode(data_list, filename):
-	print("Called geocode")
 	coords = []
 	for i in range(len(data_list)):
 		place = data_list[i]['city']+','+data_list[i]['state']
@@ -89,7 +96,7 @@ def testJSONData():
 	coords_df = pd.read_csv('testing_coords.csv')
 	for i in range(len(coords_df)):
 		c = {}
-		c['phone'] = test[i]['phonenumber'].split(',')[0]
+		c['phone'] = test[i]['phonenumber']
 		c['link'] = test[i]['contact']
 		c['name'] = test[i]['nameoftheorganisation']
 		c['lat'] = coords_df['lat'][i]
@@ -107,7 +114,7 @@ def policeJSONData():
 		p = {}
 		p['name'] = police[i]['nameoftheorganisation']
 		p['descr'] = police[i]['descriptionandorserviceprovided']
-		p['phone'] = police[i]['phonenumber'].split(' ')[0]
+		p['phone'] = police[i]['phonenumber']
 		p['contact'] = police[i]['contact']
 		p['lat'] = coords_df['lat'][i]
 		p['lng'] = coords_df['lng'][i]
@@ -120,7 +127,10 @@ def policeJSONData():
 
 @app.route("/")
 def home():
-	return render_template('index.html', data=json.dumps(df), tc=df['totalconfirmed'][-1], tr=df['totalrecovered'][-1], td=df['totaldeceased'][-1], dc=df['dailyconfirmed'][-1],dr=df['dailyrecovered'][-1],dd=df['dailydeceased'][-1])
+	_ci=math.ceil(100*(int(df['dailyconfirmed'][-1])/int(df['totalconfirmed'][-1])))
+	_ri=math.ceil(100*(int(df['dailyrecovered'][-1])/int(df['totalrecovered'][-1])))
+	_di=math.ceil(100*(int(df['dailydeceased'][-1])/int(df['totaldeceased'][-1])))
+	return render_template('index.html', data=json.dumps(df), tc=df['totalconfirmed'][-1], tr=df['totalrecovered'][-1], td=df['totaldeceased'][-1], dc=df['dailyconfirmed'][-1],dr=df['dailyrecovered'][-1],dd=df['dailydeceased'][-1], _ci=_ci, _ri=_ri, _di=_di, days=countDays(date1, date2), state=state_data)
 
 @app.route("/testing-lab")
 def testing():
@@ -137,6 +147,11 @@ def policeHelp():
 	f = open('police_data.json', 'r')
 	data = json.load(f)
 	return render_template('police.html', data=data)
+
+# @app.route("/resources")
+# def resources():
+
+
     
 if __name__ == "__main__":
     app.run(debug=True)
