@@ -111,36 +111,34 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<div class="row">
-		<div class="col-md-6"><canvas id="dailyConfirmed" width="500%" height="300%"></canvas></div>
-		<div class="col-md-6"><canvas id="totalConfirmed" width="500%" height="300%"></canvas></div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="dailyConfirmed"></canvas></div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="totalConfirmed"></canvas></div>
 	</div>
 	<div class="row">
-		<div class="col-md-6"><canvas id="dailyRecovered" width="500%" height="300%"></canvas></div>
-		<div class="col-md-6"><canvas id="totalRecovered" width="500%" height="300%"></canvas></div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="dailyRecovered"></canvas></div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="totalRecovered"></canvas></div>
 	</div>
 	<div class="row">
-		<div class="col-md-6"><canvas id="dailyDeceased" width="500%" height="300%"></canvas></div>
-		<div class="col-md-6"><canvas id="totalDeceased" width="500%" height="300%"></canvas></div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="dailyDeceased"></canvas></div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="totalDeceased"></canvas></div>
 	</div>
-	<br>
+</div>
+<br>
+<div class="container">
 	<div class="row text-center">
-		<div class="col-md-4"></div>
-		<div class="col-md-4">
+		<div class="col-xs-12 col-sm-12 col-md-4"></div>
+		<div class="col-xs-12 col-sm-12 col-md-4">
 			<select id="state" name="state" class="form-control" onchange="displayGraph()" style="background-color: orange; color: white; font-weight: bold;">
 				<option>Select State</option>
 			</select>
 		</div>
-		<div class="col-md-4"></div>
+		<div class="col-xs-12 col-sm-12 col-md-4"></div>
 	</div>
-	<br>
-</div>
-<div class="row" id="state-graph"></div>
-<br>
-<div class="container">
+	<div class="row" id="state-graph-1"></div><br>
+	<div class="row" id="state-graph-2"></div><br>
 	<div id="state-data"></div>
 </div>
 <script>
@@ -152,6 +150,9 @@
 		local_dates.push(new Date(data['date'][i]).toLocaleString());
 
 	const options = { 
+		responsive: true,
+		maintainAspectRatio: true,
+		aspectRatio: 1.5,
 		scales: {
 			xAxes: [{
 				type: 'time'
@@ -215,21 +216,23 @@
 					borderWidth: 2,
 				}]
 			},
-			options: null,
+			options: {
+				responsive: true,
+				maintainAspectRatio: true,
+				aspectRatio: 1.4,
+			},
 		});
 	}
 
 	const displayGraph = () => {
-		document.getElementById("state-graph").innerHTML = `
-			<div class="col-md-6">
-				<canvas id="stateConfirmed" width="635" height="300"></canvas>
-				<canvas id="stateRecovered" width="635" height="300"></canvas>
-			</div>
-			<div class="col-md-6">
-				<canvas id="stateActive" width="635" height="300"></canvas>
-				<canvas id="stateDeceased" width="635" height="300"></canvas>
-			</div>
-			`;
+		document.getElementById("state-graph-1").innerHTML = `
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="stateConfirmed"></canvas></div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="stateRecovered"></canvas></div>
+		`;
+		document.getElementById("state-graph-2").innerHTML = `
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="stateActive"></canvas></div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="stateDeceased"></canvas></div>
+		`;
 		const stc = document.getElementById('stateConfirmed').getContext('2d');
 		const sta = document.getElementById('stateActive').getContext('2d');
 		const str = document.getElementById('stateRecovered').getContext('2d');

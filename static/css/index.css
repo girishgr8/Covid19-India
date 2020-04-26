@@ -85,7 +85,17 @@ body{
 	font-weight: bold;
 }
 
-#state-graph{
+#state-graph-1, #state-graph-2{
 	margin: 0% 1.5%;
 }
 
+/*canvas{
+	width: 90%;
+	height: 90%;
+}
+
+.custom-row{
+	width: 100%; 
+	height: 50%;
+	margin: 0% 1.5%;
+}*/
