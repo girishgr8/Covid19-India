@@ -254,50 +254,50 @@
 				plotStateChart(state_active, sta, districts, 'Active Cases', active, '#FF093C');
 				plotStateChart(state_recovered, str, districts, 'Recovered Cases', recovered, '#29A746');
 				plotStateChart(state_deceased, std, districts, 'Deceased Cases', deceased, '#6A727A');
-				document.getElementById('state-data').innerHTML = `
-					<div class="outer">
-						<div class="inner">Total ${districts.length} districts affected in ${state[i].state}</div>
-					</div>
-					<br>
-					<table class="table table-bordered table-striped table-dark" id="state-data-table">
-						<thead>
-						    <tr>
-						      <th scope="col">State</th>
-						      <th scope="col">Confirmed</th>
-						      <th scope="col">Active</th>
-						      <th scope="col">Recovered</th>
-						      <th scope="col">Deceased</th>
-						    </tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-				`;
-				var cs = 0, as = 0, rs = 0, ds = 0;
-				for(var i=0; i<districts.length; i++){
-					cs+=confirmed[i];
-					as+=active[i];
-					rs+=recovered[i];
-					ds+=deceased[i];
-					$('#state-data-table').append(`
-						<tr>
-	      					<th scope="row">${districts[i]}</th>
-	      					<td>${confirmed[i]}</td>
-	      					<td>${active[i]}</td>
-	      					<td>${recovered[i]}</td>
-	      					<td>${deceased[i]}</td>
-	      				</tr>
-					`);
-				}
-				$('#state-data-table').append(`
-					<tr>
-      					<th scope="row">Total</th>
-      					<td style="font-weight: bold;">${cs}</td>
-      					<td style="font-weight: bold;">${as}</td>
-      					<td style="font-weight: bold;">${rs}</td>
-      					<td style="font-weight: bold;">${ds}</td>
-      				</tr>
-				`);
+				// document.getElementById('state-data').innerHTML = `
+				// 	<div class="outer">
+				// 		<div class="inner">Total ${districts.length} districts affected in ${state[i].state}</div>
+				// 	</div>
+				// 	<br>
+				// 	<table class="table table-bordered table-striped table-dark" id="state-data-table">
+				// 		<thead>
+				// 		    <tr>
+				// 		      <th scope="col">State</th>
+				// 		      <th scope="col">Confirmed</th>
+				// 		      <th scope="col">Active</th>
+				// 		      <th scope="col">Recovered</th>
+				// 		      <th scope="col">Deceased</th>
+				// 		    </tr>
+				// 		</thead>
+				// 		<tbody>
+				// 		</tbody>
+				// 	</table>
+				// `;
+				// var cs = 0, as = 0, rs = 0, ds = 0;
+				// for(var i=0; i<districts.length; i++){
+				// 	cs+=confirmed[i];
+				// 	as+=active[i];
+				// 	rs+=recovered[i];
+				// 	ds+=deceased[i];
+				// 	$('#state-data-table').append(`
+				// 		<tr>
+	   //    					<th scope="row">${districts[i]}</th>
+	   //    					<td>${confirmed[i]}</td>
+	   //    					<td>${active[i]}</td>
+	   //    					<td>${recovered[i]}</td>
+	   //    					<td>${deceased[i]}</td>
+	   //    				</tr>
+				// 	`);
+				// }
+				// $('#state-data-table').append(`
+				// 	<tr>
+    //   					<th scope="row">Total</th>
+    //   					<td style="font-weight: bold;">${cs}</td>
+    //   					<td style="font-weight: bold;">${as}</td>
+    //   					<td style="font-weight: bold;">${rs}</td>
+    //   					<td style="font-weight: bold;">${ds}</td>
+    //   				</tr>
+				// `);
 			}
 		}
 	}
