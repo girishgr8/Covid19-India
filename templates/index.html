@@ -147,7 +147,7 @@
 	var state = {{ state | tojson | safe }};
 	local_dates = [];
 	for(var i=0; i<data['date'].length; i++)
-		local_dates.push(new Date(data['date'][i]).toLocaleString());
+		local_dates.push(moment(new Date(data['date'][i]), "'YYYY-MM-DD'").format('YYYY-MM-DD').toLocaleString());
 
 	const options = { 
 		responsive: true,

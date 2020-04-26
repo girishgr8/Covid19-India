@@ -8,9 +8,11 @@ import os
 import csv
 import math
 from dotenv import load_dotenv
+from flask_moment import Moment
 load_dotenv()
 
 app = Flask(__name__)
+moment = Moment(app)
 # api-endpoint 
 data_url = "https://api.covid19india.org/data.json"
 r = requests.get(url=data_url)
@@ -23,7 +25,7 @@ state_data = requests.get(url="https://api.covid19india.org/v2/state_district_wi
 def countDays(date1, date2): 
     return (date2-date1).days
 
-date1 = date(2020, 1, 30) 
+date1 = date(2020,1,30) 
 date2 = date.today()
 
 keys = set()
