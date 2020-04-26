@@ -138,16 +138,15 @@
 	</div>
 	<br>
 </div>
-<div class="row" id="state-row">
-	<div class="col-md-7" id="state-graph"></div>
-	<div class="col-md-5" id="state-data"></div>
+<div class="row" id="state-graph"></div>
+<br>
+<div class="container">
+	<div id="state-data"></div>
 </div>
-	
 <script>
 	Chart.defaults.global.responsive = false;
 	var data = JSON.parse({{ data | tojson | safe }});
 	var state = {{ state | tojson | safe }};
-	console.log(state);
 	local_dates = [];
 	for(var i=0; i<data['date'].length; i++)
 		local_dates.push(new Date(data['date'][i]).toLocaleString());
@@ -222,10 +221,14 @@
 
 	const displayGraph = () => {
 		document.getElementById("state-graph").innerHTML = `
-			<canvas id="stateConfirmed" width="635" height="300"></canvas>
-			<canvas id="stateActive" width="635" height="300"></canvas>
-			<canvas id="stateRecovered" width="635" height="300"></canvas>
-			<canvas id="stateDeceased" width="635" height="300"></canvas>
+			<div class="col-md-6">
+				<canvas id="stateConfirmed" width="635" height="300"></canvas>
+				<canvas id="stateRecovered" width="635" height="300"></canvas>
+			</div>
+			<div class="col-md-6">
+				<canvas id="stateActive" width="635" height="300"></canvas>
+				<canvas id="stateDeceased" width="635" height="300"></canvas>
+			</div>
 			`;
 		const stc = document.getElementById('stateConfirmed').getContext('2d');
 		const sta = document.getElementById('stateActive').getContext('2d');
@@ -236,6 +239,8 @@
 			if(state[i].state===document.getElementById('state').value){
 				districts = [], active = [], recovered = [], confirmed = [], deceased = [];
 				for(var j=0; j<state[i].districtData.length; j++){
+					if(state[i].districtData[j].district === 'Other States')
+						state[i].districtData[j].district = 'Unkown';
 					districts.push(state[i].districtData[j].district);
 					active.push(state[i].districtData[j].active);
 					confirmed.push(state[i].districtData[j].confirmed);
@@ -247,7 +252,11 @@
 				plotStateChart(state_recovered, str, districts, 'Recovered Cases', recovered, '#29A746');
 				plotStateChart(state_deceased, std, districts, 'Deceased Cases', deceased, '#6A727A');
 				document.getElementById('state-data').innerHTML = `
-					<table class="table" id="state-data-table">
+					<div class="outer">
+						<div class="inner">Total ${districts.length} districts affected in ${state[i].state}</div>
+					</div>
+					<br>
+					<table class="table table-bordered table-striped table-dark" id="state-data-table">
 						<thead>
 						    <tr>
 						      <th scope="col">State</th>
@@ -261,17 +270,31 @@
 						</tbody>
 					</table>
 				`;
+				var cs = 0, as = 0, rs = 0, ds = 0;
 				for(var i=0; i<districts.length; i++){
-					document.getElementById('state-data-table').getElementsByTagName('tbody')[0]+=`
-					<tr>
-      					<th scope="row">${districts[i]}</th>
-      					<td>${confirmed[i]}</td>
-      					<td>${active[i]}</td>
-      					<td>${recovered[i]}</td>
-      					<td>${deceased[i]}</td>
-      				</tr>
-					`;
+					cs+=confirmed[i];
+					as+=active[i];
+					rs+=recovered[i];
+					ds+=deceased[i];
+					$('#state-data-table').append(`
+						<tr>
+	      					<th scope="row">${districts[i]}</th>
+	      					<td>${confirmed[i]}</td>
+	      					<td>${active[i]}</td>
+	      					<td>${recovered[i]}</td>
+	      					<td>${deceased[i]}</td>
+	      				</tr>
+					`);
 				}
+				$('#state-data-table').append(`
+					<tr>
+      					<th scope="row">Total</th>
+      					<td style="font-weight: bold;">${cs}</td>
+      					<td style="font-weight: bold;">${as}</td>
+      					<td style="font-weight: bold;">${rs}</td>
+      					<td style="font-weight: bold;">${ds}</td>
+      				</tr>
+				`);
 			}
 		}
 	}
