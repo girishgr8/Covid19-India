@@ -32,7 +32,12 @@
 <br>
 <div class="container">
 	<div class="outer">
-		<div class="inner">{{days}} days passed since First Corona case in India was reported (30th January, 2020)</div>
+		<div class="inner">
+			<ul style="list-style-type:square;">
+				<li>{{days}} days passed since First Corona case in India was reported (30th January, 2020)</li>
+			  	<li>{{totaltested}} number of tests conducted in India</li>
+			</ul>
+		</div>
 	</div>
 	<br>
 	<div class="row">
@@ -137,6 +142,7 @@
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-4"></div>
 	</div>
+	<br>
 	<div class="row" id="state-graph-1"></div><br>
 	<div class="row" id="state-graph-2"></div><br>
 	<div id="state-data"></div>
@@ -254,53 +260,52 @@
 				plotStateChart(state_active, sta, districts, 'Active Cases', active, '#FF093C');
 				plotStateChart(state_recovered, str, districts, 'Recovered Cases', recovered, '#29A746');
 				plotStateChart(state_deceased, std, districts, 'Deceased Cases', deceased, '#6A727A');
-				// document.getElementById('state-data').innerHTML = `
-				// 	<div class="outer">
-				// 		<div class="inner">Total ${districts.length} districts affected in ${state[i].state}</div>
-				// 	</div>
-				// 	<br>
-				// 	<table class="table table-bordered table-striped table-dark" id="state-data-table">
-				// 		<thead>
-				// 		    <tr>
-				// 		      <th scope="col">State</th>
-				// 		      <th scope="col">Confirmed</th>
-				// 		      <th scope="col">Active</th>
-				// 		      <th scope="col">Recovered</th>
-				// 		      <th scope="col">Deceased</th>
-				// 		    </tr>
-				// 		</thead>
-				// 		<tbody>
-				// 		</tbody>
-				// 	</table>
-				// `;
-				// var cs = 0, as = 0, rs = 0, ds = 0;
-				// for(var i=0; i<districts.length; i++){
-				// 	cs+=confirmed[i];
-				// 	as+=active[i];
-				// 	rs+=recovered[i];
-				// 	ds+=deceased[i];
-				// 	$('#state-data-table').append(`
-				// 		<tr>
-	   //    					<th scope="row">${districts[i]}</th>
-	   //    					<td>${confirmed[i]}</td>
-	   //    					<td>${active[i]}</td>
-	   //    					<td>${recovered[i]}</td>
-	   //    					<td>${deceased[i]}</td>
-	   //    				</tr>
-				// 	`);
-				// }
-				// $('#state-data-table').append(`
-				// 	<tr>
-    //   					<th scope="row">Total</th>
-    //   					<td style="font-weight: bold;">${cs}</td>
-    //   					<td style="font-weight: bold;">${as}</td>
-    //   					<td style="font-weight: bold;">${rs}</td>
-    //   					<td style="font-weight: bold;">${ds}</td>
-    //   				</tr>
-				// `);
+				document.getElementById('state-data').innerHTML = `
+					<div class="outer">
+						<div class="inner">Total ${districts.length} districts affected in ${state[i].state}</div>
+					</div>
+					<br>
+					<table class="table table-dark" id="state-data-table">
+						<thead>
+						    <tr>
+						      <th scope="col">District</th>
+						      <th scope="col" style="background-color: blue;">C</th>
+						      <th scope="col" style="background-color: red;">A</th>
+						      <th scope="col" style="background-color: green;">R</th>
+						      <th scope="col" style="background-color: grey;">D</th>
+						    </tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				`;
+				var cs = 0, as = 0, rs = 0, ds = 0;
+				for(var i=0; i<districts.length; i++){
+					cs+=confirmed[i];
+					as+=active[i];
+					rs+=recovered[i];
+					ds+=deceased[i];
+					$('#state-data-table').append(`
+						<tr>
+	      					<th scope="row">${districts[i]}</th>
+	      					<td style="background-color: blue;">${confirmed[i]}</td>
+	      					<td style="background-color: red;">${active[i]}</td>
+	      					<td style="background-color: green;">${recovered[i]}</td>
+	      					<td style="background-color: grey;">${deceased[i]}</td>
+	      				</tr>
+					`);
+				}
+				$('#state-data-table').append(`
+					<tr>
+      					<th scope="row">Total</th>
+      					<td style="background-color: blue;" >${cs}</td>
+      					<td style="background-color: red;">${as}</td>
+      					<td style="background-color: green;">${rs}</td>
+      					<td style="background-color: grey;">${ds}</td>
+      				</tr>
+				`);
 			}
 		}
 	}
-
 </script>
 {% endblock %}

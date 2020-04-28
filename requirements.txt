@@ -1,3 +1,9 @@
+aiohttp==3.6.2
+APScheduler==3.6.3
+async-timeout==3.0.1
+attrs==19.3.0
+beautifulsoup4==4.9.0
+bs4==0.0.1
 certifi==2020.4.5.1
 chardet==3.0.4
 click==7.1.1
@@ -5,12 +11,14 @@ cycler==0.10.0
 Flask==1.1.2
 Flask-Moment==0.9.0
 gunicorn==20.0.4
+html5lib==1.0.1
 idna==2.9
 itsdangerous==1.1.0
 Jinja2==2.11.2
 kiwisolver==1.2.0
 MarkupSafe==1.1.1
 matplotlib==3.2.1
+multidict==4.7.5
 numpy==1.18.3
 pandas==1.0.3
 pyparsing==2.4.7
@@ -19,5 +27,11 @@ python-dotenv==0.13.0
 pytz==2019.3
 requests==2.23.0
 six==1.14.0
+slack==0.0.2
+slackclient==2.5.0
+soupsieve==2.0
+tzlocal==2.0.0
 urllib3==1.25.9
+webencodings==0.5.1
 Werkzeug==1.0.1
+yarl==1.4.2

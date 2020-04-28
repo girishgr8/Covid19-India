@@ -13,14 +13,12 @@ load_dotenv()
 
 app = Flask(__name__)
 moment = Moment(app)
-# api-endpoint 
-data_url = "https://api.covid19india.org/data.json"
-r = requests.get(url=data_url)
+# api-calling
+r = requests.get(url=os.getenv("DATA_URL"))
 jd = r.json()
-resources_url = "https://api.covid19india.org/resources/resources.json"
-res = requests.get(url=resources_url)
+res = requests.get(url=os.getenv("RESOURCES_URL"))
 api_key = os.getenv("GEOCODING_KEY") # for getting api key of places API
-state_data = requests.get(url="https://api.covid19india.org/v2/state_district_wise.json").json()
+state_data = requests.get(url=os.getenv("STATE_URL")).json()
 
 def countDays(date1, date2): 
     return (date2-date1).days
@@ -69,6 +67,8 @@ month_map = {'January':'01',
 
 year = str(now.year)
 json_data = jd['cases_time_series']
+totaltested = jd['tested'][-1]['totalsamplestested']
+
 for i in range(len(json_data)):
 	for key in json_data[i]:
 		if key not in df:
@@ -78,16 +78,17 @@ for i in range(len(json_data)):
 			df[key].append(year+'-'+month_map[date[1]]+'-'+date[0])
 		else: df[key].append(json_data[i][key])
 
-def geocode(data_list, filename):
+def geocode(datalist, filename):
 	coords = []
-	for i in range(len(data_list)):
-		place = data_list[i]['city']+','+data_list[i]['state']
+	print(len(datalist))
+	for i in range(len(datalist)):
+		place = datalist[i]['city']+','+datalist[i]['state']
 		r = requests.get(url='https://api.opencagedata.com/geocode/v1/geojson?q={}&key={}'.format(place,api_key))
 		pos = r.json()['features'][0]['geometry']['coordinates']
-		print(pos)
+		print(i,pos)
 		coords.append({'lat': pos[1], 'lng': pos[0]})
 
-	with open(filename, 'w') as f: 
+	with open('{}_coords.csv'.format(filename), 'w') as f: 
 	    w = csv.DictWriter(f,['lat','lng'])
 	    w.writeheader() 
 	    for data in coords: 
@@ -109,30 +110,29 @@ def testJSONData():
 	with open("testing_data.json", "w") as f: 
 	    f.write(json_object)
 
-def policeJSONData():
-	police_data = []
-	coords_df = pd.read_csv('police_coords.csv')
-	for i in range(len(police)):
-		p = {}
-		p['name'] = police[i]['nameoftheorganisation']
-		p['descr'] = police[i]['descriptionandorserviceprovided']
-		p['phone'] = police[i]['phonenumber']
-		p['contact'] = police[i]['contact']
-		p['lat'] = coords_df['lat'][i]
-		p['lng'] = coords_df['lng'][i]
-		police_data.append(p)
-	 # Writing to testing_data.json
-	json_object = json.dumps(police_data, indent=4)
-	with open("police_data.json", "w") as f: 
-	    f.write(json_object)
-
+def makeJSONData(datalist, filename):
+	data = []
+	coords_df = pd.read_csv('{}_coords.csv'.format(filename))
+	for i in range(len(datalist)):
+		d = {}
+		d['name'] = datalist[i]['nameoftheorganisation']
+		d['descr'] = datalist[i]['descriptionandorserviceprovided']
+		d['phone'] = datalist[i]['phonenumber']
+		d['contact'] = datalist[i]['contact']
+		d['lat'] = coords_df['lat'][i]
+		d['lng'] = coords_df['lng'][i]
+		data.append(d)
+	 # Writing to {filename}.json
+	jsonObject = json.dumps(data, indent=4)
+	with open("{}_data.json".format(filename), "w") as f: 
+	    f.write(jsonObject)
 
 @app.route("/")
 def home():
 	_ci=math.ceil(100*(int(df['dailyconfirmed'][-1])/int(df['totalconfirmed'][-1])))
 	_ri=math.ceil(100*(int(df['dailyrecovered'][-1])/int(df['totalrecovered'][-1])))
 	_di=math.ceil(100*(int(df['dailydeceased'][-1])/int(df['totaldeceased'][-1])))
-	return render_template('index.html', data=json.dumps(df), tc=df['totalconfirmed'][-1], tr=df['totalrecovered'][-1], td=df['totaldeceased'][-1], dc=df['dailyconfirmed'][-1],dr=df['dailyrecovered'][-1],dd=df['dailydeceased'][-1], _ci=_ci, _ri=_ri, _di=_di, days=countDays(date1, date2), state=state_data)
+	return render_template('index.html', data=json.dumps(df), tc=df['totalconfirmed'][-1], tr=df['totalrecovered'][-1], td=df['totaldeceased'][-1], dc=df['dailyconfirmed'][-1],dr=df['dailyrecovered'][-1],dd=df['dailydeceased'][-1], _ci=_ci, _ri=_ri, _di=_di, days=countDays(date1, date2), state=state_data, totaltested=totaltested)
 
 @app.route("/testing-lab")
 def testing():
@@ -144,16 +144,27 @@ def testing():
 
 @app.route("/police")
 def policeHelp():
-	# geocode(police,'police_coords.csv')
-	# policeJSONData()
+	# geocode(police, 'police')
+	# makeJSONData(police, 'police')
 	f = open('police_data.json', 'r')
 	data = json.load(f)
 	return render_template('police.html', data=data)
 
-# @app.route("/resources")
-# def resources():
+@app.route("/helpline")
+def helplineNumbers():
+	# geocode(helpline, 'helpline')
+	# makeJSONData(helpline, 'helpline')
+	f = open('helpline_data.json', 'r')
+	data = json.load(f)
+	return render_template('helpline.html', data=json.dumps(data))
 
-
+@app.route("/donate")
+def donate():
+	# geocode(fundraisers, 'donate')
+	# makeJSONData(fundraisers, 'donate')
+	f = open('donate_data.json', 'r')
+	data = json.load(f)
+	return render_template('donate.html', data=json.dumps(data))
     
 if __name__ == "__main__":
     app.run(debug=True)
