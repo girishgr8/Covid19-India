@@ -14,11 +14,11 @@ load_dotenv()
 app = Flask(__name__)
 moment = Moment(app)
 # api-calling
-r = requests.get(url=os.getenv("DATA_URL"))
+r = requests.get(url=os.getenv('DATA_URL'))
 jd = r.json()
-res = requests.get(url=os.getenv("RESOURCES_URL"))
-api_key = os.getenv("GEOCODING_KEY") # for getting api key of places API
-state_data = requests.get(url=os.getenv("STATE_URL")).json()
+res = requests.get(url=os.getenv('RESOURCES_URL'))
+api_key = os.getenv('GEOCODING_KEY') # for getting api key of places API
+state_data = requests.get(url=os.getenv('STATE_URL')).json()
 
 def countDays(date1, date2): 
     return (date2-date1).days
