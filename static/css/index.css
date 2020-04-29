@@ -91,6 +91,7 @@ body{
 	margin: 0% 1.5%;
 }
 
-td{
+th,td{
+	text-align: center;
 	font-weight: bold;
 }

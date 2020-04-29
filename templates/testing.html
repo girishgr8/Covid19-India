@@ -14,6 +14,7 @@
 
 {% block content %}
 <div id="map"></div>
+{% include 'footer.html' %}
 <script type="text/javascript">
 	
 	var latitude, longitude, marker, map = L.map('map').setView([19.43, 72.44],8);
@@ -43,6 +44,5 @@
 		console.log(data[0]);
 		marker = L.marker([parseInt(data[i]['lat']), parseInt(data[i]['lng'])], {icon: icon}).bindPopup(`<b>Name:</b> ${data[i]['name']}<br><b>Contact:</b> ${data[i]['phone']}<br><b>Link:</b> <a href="${data[i]['link']}">${data[i]['link']}</a>`).addTo(map);
 	}
-
 </script>
 {% endblock %}

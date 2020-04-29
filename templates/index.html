@@ -147,6 +147,7 @@
 	<div class="row" id="state-graph-2"></div><br>
 	<div id="state-data"></div>
 </div>
+{% include 'footer.html' %}
 <script>
 	Chart.defaults.global.responsive = false;
 	var data = JSON.parse({{ data | tojson | safe }});
@@ -265,19 +266,21 @@
 						<div class="inner">Total ${districts.length} districts affected in ${state[i].state}</div>
 					</div>
 					<br>
-					<table class="table table-dark" id="state-data-table">
-						<thead>
-						    <tr>
-						      <th scope="col">District</th>
-						      <th scope="col" style="background-color: blue;">C</th>
-						      <th scope="col" style="background-color: red;">A</th>
-						      <th scope="col" style="background-color: green;">R</th>
-						      <th scope="col" style="background-color: grey;">D</th>
-						    </tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
+					<div class="table-responsive-sm table-responsive-xs">
+						<table class="table table-dark" id="state-data-table">
+							<thead>
+							    <tr>
+							      <th scope="col">District</th>
+							      <th scope="col" style="background-color: blue;">Confirm</th>
+							      <th scope="col" style="background-color: red;">Active</th>
+							      <th scope="col" style="background-color: green;">Recovered</th>
+							      <th scope="col" style="background-color: grey;">Deceased</th>
+							    </tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 				`;
 				var cs = 0, as = 0, rs = 0, ds = 0;
 				for(var i=0; i<districts.length; i++){

@@ -19,13 +19,11 @@
     <link rel="icon" type="image/png" sizes="192x192"  href="{{url_for('static', filename='images/favicons/android-chrome-192x192.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='images/favicons/favicon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='images/favicons/favicon-16x16.png')}}">
-
 	<title>Covid-19 India</title>
 </head>
 <body>
 	{% include 'nav.html' %}
-	{% block content %}
-	{% endblock %}
+	{% block content %} {% endblock %}
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
