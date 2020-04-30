@@ -1,6 +1,24 @@
 {% include 'layout.html' %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
 {% block content %}
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="onload-modal" style="top: 15vh; font-family: Roboto; font-size: 1.2rem;">
+
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title"><span class="mx-2"><i class="fab fa-slack"></i></span>Join Our Slack Channel</h4>
+				<button type="button" tabindex="-1" class="close" data-dismiss="modal">×</button>
+			</div>
+			<div class="modal-body">
+				<a href="https://join.slack.com/t/kjscehq/shared_invite/zt-e28odqvo-6Fe6Fo8_e5lUsdHzjzpmKQ"> Click here</a> to join our slack channel and get updates about Covid-19 count in India every 2 hours.
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="container">
 	<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
 		<ol class="carousel-indicators">
@@ -149,6 +167,9 @@
 </div>
 {% include 'footer.html' %}
 <script>
+	$(window).on('load',function(){
+        $('#onload-modal').modal('show');
+    });
 	Chart.defaults.global.responsive = false;
 	var data = JSON.parse({{ data | tojson | safe }});
 	var state = {{ state | tojson | safe }};
