@@ -30,6 +30,7 @@ Open  this url in your browser :  http://localhost:5000
 ## Improvements
 - [ ] Top and latest news update
 - [ ] Add districtwise heatmap for each state
+- [ ] Convert to PWA
 
 **This project was developed to make best use of time and explore Chart.js library**
 
