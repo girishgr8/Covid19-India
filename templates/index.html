@@ -10,13 +10,13 @@
 		</ol>
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img src="{{url_for('static', filename='images/slide1.png')}}" class="d-block w-100" alt="...">
+				<img src="{{url_for('static', filename='images/slide1.png')}}" class="d-block w-100">
 			</div>
 			<div class="carousel-item">
-				<img src="{{url_for('static', filename='images/slide2.jpg')}}" class="d-block w-100 h-10" alt="...">
+				<img src="{{url_for('static', filename='images/slide2.jpg')}}" class="d-block w-100 h-10">
 			</div>
 			<div class="carousel-item">
-				<img src="{{url_for('static', filename='images/slide3.png')}}" class="d-block w-100" alt="...">
+				<img src="{{url_for('static', filename='images/slide3.png')}}" class="d-block w-100"">
 			</div>
 		</div>
 		<a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
@@ -271,10 +271,10 @@
 							<thead>
 							    <tr>
 							      <th scope="col">District</th>
-							      <th scope="col" style="background-color: blue;">Confirm</th>
-							      <th scope="col" style="background-color: red;">Active</th>
-							      <th scope="col" style="background-color: green;">Recovered</th>
-							      <th scope="col" style="background-color: grey;">Deceased</th>
+							      <th scope="col">Confirmed</th>
+							      <th scope="col">Active</th>
+							      <th scope="col">Recovered</th>
+							      <th scope="col">Deceased</th>
 							    </tr>
 							</thead>
 							<tbody>
@@ -291,20 +291,20 @@
 					$('#state-data-table').append(`
 						<tr>
 	      					<th scope="row">${districts[i]}</th>
-	      					<td style="background-color: blue;">${confirmed[i]}</td>
-	      					<td style="background-color: red;">${active[i]}</td>
-	      					<td style="background-color: green;">${recovered[i]}</td>
-	      					<td style="background-color: grey;">${deceased[i]}</td>
+	      					<td>${confirmed[i]}</td>
+	      					<td>${active[i]}</td>
+	      					<td>${recovered[i]}</td>
+	      					<td>${deceased[i]}</td>
 	      				</tr>
 					`);
 				}
 				$('#state-data-table').append(`
 					<tr>
       					<th scope="row">Total</th>
-      					<td style="background-color: blue;" >${cs}</td>
-      					<td style="background-color: red;">${as}</td>
-      					<td style="background-color: green;">${rs}</td>
-      					<td style="background-color: grey;">${ds}</td>
+      					<td>${cs}</td>
+      					<td>${as}</td>
+      					<td>${rs}</td>
+      					<td>${ds}</td>
       				</tr>
 				`);
 			}
