@@ -1,0 +1,118 @@
+{% include 'layout.html' %}
+{% block content %}
+<style type="text/css">
+	.chart--container{
+		width: 100vw;
+		height: 100vh;
+	}
+</style>
+<div id="myChart" class="chart--container"></div>  
+<script>
+	ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+	zingchart.TOUCHZOOM = 'pinch'; 
+	var color = ['#B0DFE5', '#95C8D8', '#57A0D3', '#4F97A3', '#0F52BA', '#111E6C', '#000080', '#000080', '#1D2951'];
+	function getColor(d) {
+		 if (0 <= d && d < 1) return color[0];
+            else if (1 <= d && d < 2) 
+                return color[1];
+            else if (90 <= d && d < 100)
+                return color[9];
+            else if (2 <= d && d < 4)
+                return color[2];
+            else if (4 <= d && d < 10)
+                return color[3];
+            else if (10 <= d && d < 20)
+                return color[4];
+            else if (20 <= d && d < 30)
+                return color[5];
+            else if (30 <= d && d < 40)
+                return color[6];
+           	else if (40 <= d && d < 60)
+                return color[7];
+            else if (60 <= d && d < 90) 
+                return color[8];
+	}
+	var items = {};
+
+	var data = {{ data | tojson | safe }};
+	
+	for(var i=0; i<data.length; i++){
+		var tooltip = {'text': `${data[i]['state']}\n${data[i]['active']} active cases\n${data[i]['recovered']} recovered cases\n${data[i]['deaths']} deceased cases\n`};
+		var options = {};
+		options['tooltip'] = tooltip;
+		options['backgroundColor'] = getColor(parseInt(100*(parseInt(data[i]['confirmed']) / parseInt(data[0]['confirmed']))));
+		options['label'] = {visible : true};
+		if(data[i]['statecode'] === 'TG')
+			data[i]['statecode'] = 'TL';
+		items[data[i]['statecode']] = options;
+	}
+	const plotMap = () => {
+		let chartConfig = {
+		shapes: [
+		{
+			type: 'zingchart.maps',
+			options: {
+				bbox: [67.177, 36.494, 98.403, 6.965],
+				ignore: ['IND'], 
+				name: 'world.countries',
+				panning: false, 
+				style: {
+					tooltip: {
+						borderColor: '#000',
+						borderWidth: '2px',
+						fontSize: '18px'
+					},
+					controls: {
+						visible: false 
+					},
+					hoverState: {
+						alpha: .28
+					}
+				},
+				zooming: false 
+			}
+		},
+		{
+			type: 'zingchart.maps',
+			options: {
+				name: 'ind',
+				panning: false, 
+				zooming: false,
+				scrolling: false,
+				style: {
+					tooltip: {
+						borderColor: '#000',
+						borderWidth: '1px',
+						fontSize: '15px'
+					},
+					borderColor: '#000',
+					borderWidth: '1px',
+					controls: {
+						visible: false,
+					},
+					hoverState: {
+						alpha: .28
+					},
+					items: items,
+					label: { 
+						fontSize: '15px',
+						visible: false
+					}
+				},
+				zooming: false
+			}
+		}
+		]
+	}
+
+	zingchart.loadModules('maps,maps-ind,maps-world-countries');
+	zingchart.render({
+		id: 'myChart',
+		data: chartConfig,
+		height: '100%',
+		width: '100%',
+	});
+	}
+	plotMap();
+</script>
+{% endblock %}

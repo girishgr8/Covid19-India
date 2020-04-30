@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import csv
 from dotenv import load_dotenv
 load_dotenv()
-from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers import BlockingScheduler
 
 # Request to get content of given url
 page = requests.get('https://www.mohfw.gov.in/')
@@ -78,8 +78,8 @@ def cronJob():
 	response = send_file("old.csv", "New Updated Records")
 	assert response["ok"]
 
-# BackgroundScheduler that will run daemon thread in background...
-scheduler = BackgroundScheduler(daemon=True)
+# BlockingScheduler that will run daemon thread in background...
+scheduler = BlockingScheduler()
 scheduler.add_job(cronJob, 'interval', hours=3)
 scheduler.start()
 

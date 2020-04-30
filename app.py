@@ -67,6 +67,7 @@ month_map = {'January':'01',
 
 year = str(now.year)
 json_data = jd['cases_time_series']
+json_state_data = jd['statewise']
 totaltested = jd['tested'][-1]['totalsamplestested']
 
 for i in range(len(json_data)):
@@ -166,5 +167,8 @@ def donate():
 	data = json.load(f)
 	return render_template('donate.html', data=json.dumps(data))
     
+@app.route("/map")
+def map():
+	return render_template('map.html', data=json_state_data)
 if __name__ == "__main__":
     app.run(debug=True)
