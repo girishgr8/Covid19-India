@@ -7,8 +7,8 @@
 ## Getting Started
 Clone this repository and follow steps below:
 ```
-git clone https://github.com/girishgr8/Covid19_SlackBot
-cd Covid19_SlackBot
+git clone https://github.com/girishgr8/Covid19-India
+cd Covid19-India
 python -m venv env
 env\Scripts\activate
 pip install -r requirements.txt
@@ -24,7 +24,7 @@ Open  this url in your browser :  http://localhost:5000
 - [x] Join Slack channel for latest updates
 
 ## Demo
-![Demo](https://github.com/girishgr8/Covid19_SlackBot/blob/master/demo/demo.gif)
+![Demo](https://github.com/girishgr8/Covid19-India/blob/master/demo/demo.gif)
 
 
 ## Improvements
