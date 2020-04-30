@@ -24,14 +24,14 @@ Open  this url in your browser :  http://localhost:5000
 - [x] Join Slack channel for latest updates
 
 ## Demo
-![demo]()
+![Demo](https://github.com/girishgr8/Covid19_SlackBot/blob/master/demo/demo.gif)
 
 
 ## Improvements
 - [ ] Top and latest news update
 - [ ] Add districtwise heatmap for each state
 
-**This project was developed to make best use of time**
+**This project was developed to make best use of time and explore Chart.js library**
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
