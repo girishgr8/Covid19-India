@@ -25,8 +25,10 @@ Open  this url in your browser :  http://localhost:5000
 
 ## Demo
 ![Demo](https://github.com/girishgr8/Covid19-India/blob/master/demo/demo.gif)
+<p align="center">
+  <img src="https://github.com/girishgr8/Covid19-India/blob/master/demo/bot.jpeg" width="320px" height="480px">
+</p>
 
-![Bot-Demo](https://github.com/girishgr8/Covid19-India/blob/master/demo/bot.jpeg)
 
 ## Improvements
 - [ ] Top and latest news update
