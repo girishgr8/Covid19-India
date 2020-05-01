@@ -21,7 +21,7 @@ Open  this url in your browser :  http://localhost:5000
 - [x] Visualise the trend graphically
 - [x] Statewise visualisation
 - [x] India's Heatmap according to count
-- [x] Join Slack channel for latest updates
+- [x] Join Slack channel to get updated stats every 1 hour.
 
 ## Demo
 ![Demo](https://github.com/girishgr8/Covid19-India/blob/master/demo/demo.gif)
@@ -33,7 +33,7 @@ Open  this url in your browser :  http://localhost:5000
 - [ ] Add districtwise heatmap for each state
 - [ ] Convert to PWA
 
-**This project was developed to make best use of time and explore Chart.js library**
+**This project was developed to make best use of time and explore Chart.js library and SlackBot Integration**
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
