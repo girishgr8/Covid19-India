@@ -26,6 +26,7 @@ Open  this url in your browser :  http://localhost:5000
 ## Demo
 ![Demo](https://github.com/girishgr8/Covid19-India/blob/master/demo/demo.gif)
 
+![Bot-Demo](https://github.com/girishgr8/Covid19-India/blob/master/demo/bot.jpeg)
 
 ## Improvements
 - [ ] Top and latest news update
