@@ -9,7 +9,7 @@
 				<button type="button" tabindex="-1" class="close" data-dismiss="modal">×</button>
 			</div>
 			<div class="modal-body">
-				<a href="https://join.slack.com/t/kjscehq/shared_invite/zt-e28odqvo-6Fe6Fo8_e5lUsdHzjzpmKQ"> Click here</a> to join our slack channel and get updates about Covid-19 count in India every 2 hours.
+				<a href="https://join.slack.com/t/kjscehq/shared_invite/zt-e28odqvo-6Fe6Fo8_e5lUsdHzjzpmKQ"> Click here</a> to join our slack channel and get updates about Covid-19 count in India every <b>1 hour</b>.
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
@@ -171,6 +171,14 @@
     });
 	Chart.defaults.global.responsive = false;
 	var data = JSON.parse({{ data | tojson | safe }});
+	var len = data['date'].length;
+	var start = len-90, end = len;
+
+	if(start>=0)
+		for(var key in data)
+			data[key] = data[key].slice(start,end);
+	
+
 	var state = {{ state | tojson | safe }};
 	local_dates = [];
 	for(var i=0; i<data['date'].length; i++)

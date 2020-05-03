@@ -2,7 +2,7 @@
 **Get all stats, updates and help for Covid-19 India**
 
 ![made-with-python](https://img.shields.io/badge/Made%20With-Python-red?style=for-the-badge&logo=Python)
-![made-with-flask](https://img.shields.io/badge/Made%20With-Flask-blue?style=for-the-badge&logo=Flask)
+![made-with-flask](https://img.shields.io/badge/Made%20With-Flask-blue?style=for-the-badge&logo=Flask) ![hosted-on-heroku](http://img.shields.io/badge/Deplyed%20on-Heroku-blueviolet?style=for-the-badge&logo=Heroku)
 
 ## Getting Started
 Clone this repository and follow steps below:
