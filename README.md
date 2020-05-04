@@ -20,6 +20,7 @@ Open  this url in your browser :  http://localhost:5000
 - [x] Statistics about India's Covid-19 count
 - [x] Visualise the trend graphically
 - [x] Statewise visualisation
+- [x] Districtwise zones
 - [x] India's Heatmap according to count
 - [x] Join Slack channel to get updated stats every 1 hour.
 
@@ -38,4 +39,4 @@ Open  this url in your browser :  http://localhost:5000
 **This project was developed to make best use of time and explore Chart.js library and SlackBot Integration**
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/girishgr8/Covid19-India/blob/master/README.md) file for details

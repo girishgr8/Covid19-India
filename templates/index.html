@@ -53,6 +53,7 @@
 			<ul style="list-style-type:square;">
 				<li>{{days}} days passed since First Corona case in India was reported (30th January, 2020)</li>
 			  	<li>{{totaltested}} number of tests conducted in India</li>
+			  	<li>{{maxState}} state has conducted maximum number of tests ({{maxTests}}) in India</li>
 			</ul>
 		</div>
 	</div>
@@ -171,6 +172,9 @@
     });
 	Chart.defaults.global.responsive = false;
 	var data = JSON.parse({{ data | tojson | safe }});
+	var state = {{ state | tojson | safe }};
+	var state_test = JSON.parse({{ state_test | tojson | safe }});
+	var zones = JSON.parse({{ zones | tojson | safe }});
 	var len = data['date'].length;
 	var start = len-90, end = len;
 
@@ -178,8 +182,6 @@
 		for(var key in data)
 			data[key] = data[key].slice(start,end);
 	
-
-	var state = {{ state | tojson | safe }};
 	local_dates = [];
 	for(var i=0; i<data['date'].length; i++)
 		local_dates.push(moment(new Date(data['date'][i]), "'YYYY-MM-DD'").format('YYYY-MM-DD').toLocaleString());
@@ -258,7 +260,7 @@
 			},
 		});
 	}
-
+	var districtZones;
 	const displayGraph = () => {
 		document.getElementById("state-graph-1").innerHTML = `
 			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="stateConfirmed"></canvas></div>
@@ -272,13 +274,16 @@
 		const sta = document.getElementById('stateActive').getContext('2d');
 		const str = document.getElementById('stateRecovered').getContext('2d');
 		const std = document.getElementById('stateDeceased').getContext('2d');
-
 		for(var i=0; i<state.length; i++) {
 			if(state[i].state===document.getElementById('state').value){
-				districts = [], active = [], recovered = [], confirmed = [], deceased = [];
+				districts = [], active = [], recovered = [], confirmed = [], deceased = [], districtZones = {};
 				for(var j=0; j<state[i].districtData.length; j++){
-					if(state[i].districtData[j].district === 'Other States')
-						state[i].districtData[j].district = 'Unkown';
+					if(state[i].districtData[j].district.includes('Other'))
+						state[i].districtData[j].district = 'Unknown';
+					if(state[i].districtData[j].district in zones[state[i].state]){
+						districtZones[state[i].districtData[j].district] = zones[state[i].state][state[i].districtData[j].district];
+						delete zones[state[i].state][state[i].districtData[j].district];
+					}
 					districts.push(state[i].districtData[j].district);
 					active.push(state[i].districtData[j].active);
 					confirmed.push(state[i].districtData[j].confirmed);
@@ -291,18 +296,23 @@
 				plotStateChart(state_deceased, std, districts, 'Deceased Cases', deceased, '#6A727A');
 				document.getElementById('state-data').innerHTML = `
 					<div class="outer">
-						<div class="inner">Total ${districts.length} districts affected in ${state[i].state}</div>
+						<div class="inner">
+							<ul style="list-style-type:square;">
+								<li>Total ${districts.length} districts affected in ${state[i].state}</li>
+								<li>Total ${state_test[state[i].state]} number of tests conducted in ${state[i].state}</li>
+							</ul>
+						</div>
 					</div>
 					<br>
 					<div class="table-responsive-sm table-responsive-xs">
 						<table class="table table-dark" id="state-data-table">
 							<thead>
 							    <tr>
-							      <th scope="col">District</th>
-							      <th scope="col">Confirmed</th>
-							      <th scope="col">Active</th>
-							      <th scope="col">Recovered</th>
-							      <th scope="col">Deceased</th>
+							      <th scope="col">Zone & District</th>
+							      <th scope="col">C</th>
+							      <th scope="col">A</th>
+							      <th scope="col">R</th>
+							      <th scope="col">D</th>
 							    </tr>
 							</thead>
 							<tbody>
@@ -311,18 +321,29 @@
 					</div>
 				`;
 				var cs = 0, as = 0, rs = 0, ds = 0;
-				for(var i=0; i<districts.length; i++){
-					cs+=confirmed[i];
-					as+=active[i];
-					rs+=recovered[i];
-					ds+=deceased[i];
+				for(var k=0; k<districts.length; k++){
+					cs+=confirmed[k];
+					as+=active[k];
+					rs+=recovered[k];
+					ds+=deceased[k];
 					$('#state-data-table').append(`
 						<tr>
-	      					<th scope="row">${districts[i]}</th>
-	      					<td>${confirmed[i]}</td>
-	      					<td>${active[i]}</td>
-	      					<td>${recovered[i]}</td>
-	      					<td>${deceased[i]}</td>
+	      					<th scope="row" style="text-align: left;"><span class="mr-2" style="display: inline-block; width: 20px; height: 20px; background-color:${districtZones[districts[k]]}"></span>${districts[k]}</th>
+	      					<td>${confirmed[k]}</td>
+	      					<td>${active[k]}</td>
+	      					<td>${recovered[k]}</td>
+	      					<td>${deceased[k]}</td>
+	      				</tr>
+					`);
+				}
+				for(var key in zones[state[i].state]){
+					$('#state-data-table').append(`
+						<tr>
+	      					<th scope="row" style="text-align: left;"><span class="mr-2" style="display: inline-block; width: 20px; height: 20px; background-color:${zones[state[i].state][key]}"></span>${key}</th>
+	      					<td>---</td>
+	      					<td>---</td>
+	      					<td>---</td>
+	      					<td>---</td>
 	      				</tr>
 					`);
 				}

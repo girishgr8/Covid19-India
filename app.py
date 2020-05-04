@@ -19,6 +19,30 @@ jd = r.json()
 res = requests.get(url=os.getenv('RESOURCES_URL'))
 api_key = os.getenv('GEOCODING_KEY') # for getting api key of places API
 state_data = requests.get(url=os.getenv('STATE_URL')).json()
+t = requests.get(url="https://api.covid19india.org/state_test_data.json").json()['states_tested_data']
+zone_data = requests.get(url="https://api.covid19india.org/zones.json").json()['zones']
+
+state_test = dict()
+maxTest = -1
+state = ""
+for i in range(len(t)): 
+	if t[i]['totaltested'] != '':
+		state_test[t[i]['state']] =  int(t[i]['totaltested'])
+	
+for s in state_test:
+	temp = max(maxTest, state_test[s])
+	if maxTest != temp: state = s
+	maxTest = temp
+
+zones = dict()
+
+for zone in zone_data:
+	district = zone['district']
+	if 'Other' in district : district = 'Unknown'
+	statecode = zone['state']
+	if statecode not in zones: 
+		zones[statecode] = dict()
+	zones[statecode][district] = zone['zone']	
 
 def countDays(date1, date2): 
     return (date2-date1).days
@@ -133,7 +157,7 @@ def home():
 	_ci=math.ceil(100*(int(df['dailyconfirmed'][-1])/int(df['totalconfirmed'][-1])))
 	_ri=math.ceil(100*(int(df['dailyrecovered'][-1])/int(df['totalrecovered'][-1])))
 	_di=math.ceil(100*(int(df['dailydeceased'][-1])/int(df['totaldeceased'][-1])))
-	return render_template('index.html', data=json.dumps(df), tc=df['totalconfirmed'][-1], tr=df['totalrecovered'][-1], td=df['totaldeceased'][-1], dc=df['dailyconfirmed'][-1],dr=df['dailyrecovered'][-1],dd=df['dailydeceased'][-1], _ci=_ci, _ri=_ri, _di=_di, days=countDays(date1, date2), state=state_data, totaltested=totaltested)
+	return render_template('index.html', data=json.dumps(df), tc=df['totalconfirmed'][-1], tr=df['totalrecovered'][-1], td=df['totaldeceased'][-1], dc=df['dailyconfirmed'][-1],dr=df['dailyrecovered'][-1],dd=df['dailydeceased'][-1], _ci=_ci, _ri=_ri, _di=_di, days=countDays(date1, date2), state=state_data, totaltested=totaltested, maxState=state, maxTests=maxTest, state_test=json.dumps(state_test), zones=json.dumps(zones))
 
 @app.route("/testing-lab")
 def testing():
