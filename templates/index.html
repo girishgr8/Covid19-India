@@ -1,6 +1,30 @@
 {% include 'layout.html' %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
 {% block content %}
+<style type="text/css">
+	tr.hide-table-padding td {
+		padding: 0;
+	}
+	.expand-button {
+		display: inline-block;
+		position: relative;
+	}
+	.accordion-toggle .expand-button:after
+	{
+	  position: absolute;
+	  left: -0.75rem;
+	  top: -0.5rem;
+	  transform: translate(0, -50%);
+	  font-family: "Font Awesome 5 Free";
+	  font-size: 18px;
+	  content: '\f0d7';
+	}
+	.accordion-toggle.collapsed .expand-button:after{
+	   font-family: "Font Awesome 5 Free";
+	   font-size: 18px;
+	   content: "\f0da";
+	}
+</style>
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="onload-modal" style="top: 15vh; font-family: Roboto; font-size: 1.2rem;">
 	<div class="modal-dialog">
 		<div class="modal-content">

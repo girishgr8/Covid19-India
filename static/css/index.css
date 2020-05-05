@@ -104,26 +104,3 @@ th > span{
 	display: inline-block;
 }
 
-tr.hide-table-padding td {
-	padding: 0;
-}
-
-.expand-button {
-	display: inline-block;
-	position: relative;
-}
-.accordion-toggle .expand-button:after
-{
-  position: absolute;
-  left: -0.75rem;
-  top: -0.5rem;
-  transform: translate(0, -50%);
-  font-family: "Font Awesome 5 Free";
-  font-size: 18px;
-  content: '\f0d7';
-}
-.accordion-toggle.collapsed .expand-button:after{
-   font-family: "Font Awesome 5 Free";
-   font-size: 18px;
-   content: "\f0da";
-}
