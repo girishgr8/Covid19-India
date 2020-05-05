@@ -33,7 +33,7 @@
 				<img src="{{url_for('static', filename='images/slide2.jpg')}}" class="d-block w-100 h-10">
 			</div>
 			<div class="carousel-item">
-				<img src="{{url_for('static', filename='images/slide3.png')}}" class="d-block w-100"">
+				<img src="{{url_for('static', filename='images/slide3.png')}}" class="d-block w-100">
 			</div>
 		</div>
 		<a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
@@ -47,7 +47,7 @@
 	</div>
 </div>
 <br>
-<div class="container">
+<div class="container">	
 	<div class="outer">
 		<div class="inner">
 			<ul style="list-style-type:square;">
@@ -151,19 +151,12 @@
 </div>
 <br>
 <div class="container">
-	<div class="row text-center">
-		<div class="col-xs-12 col-sm-12 col-md-4"></div>
-		<div class="col-xs-12 col-sm-12 col-md-4">
-			<select id="state" name="state" class="form-control" onchange="displayGraph()" style="background-color: orange; color: white; font-weight: bold;">
-				<option>Select State</option>
-			</select>
+	<div class="card text-center">
+		<div class="card-header text-white bg-primary">
+			Indian States
 		</div>
-		<div class="col-xs-12 col-sm-12 col-md-4"></div>
+		<div class="card-body" id="data"></div>
 	</div>
-	<br>
-	<div class="row" id="state-graph-1"></div><br>
-	<div class="row" id="state-graph-2"></div><br>
-	<div id="state-data"></div>
 </div>
 {% include 'footer.html' %}
 <script>
@@ -204,7 +197,7 @@
 	const ctx_dd = document.getElementById('dailyDeceased').getContext('2d');
 	const ctx_td = document.getElementById('totalDeceased').getContext('2d');
 	
-	var chart_dc, chart_tc, chart_dr, chart_tr, chart_dd, chart_dd, chart_td, state_confirmed, state_active, state_recovered, state_deceased;
+	var chart_dc, chart_tc, chart_dr, chart_tr, chart_dd, chart_dd, chart_td;
 
 	const plotChart = (chart, ctx, label, type, color, options) => {
 		chart = new Chart(ctx, {
@@ -235,129 +228,100 @@
 	// Total Deceased
 	plotChart(chart_td, ctx_td, 'Total Deceased', 'totaldeceased', '#6D767E', options);
 
+	document.getElementById('data').innerHTML = `
+		<div class="table-responsive-sm table-responsive-xs">
+			<table class="table text-nowrap" id="data-table">
+				<thead>
+				    <tr>
+				      <th class="text-left mx-2" scope="col">State</th>
+				      <th scope="col">Confirmed</th>
+				      <th scope="col">Active</th>
+				      <th scope="col">Recovered</th>
+				      <th scope="col">Deceased</th>
+				    </tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	`;
+	console.log(zones);
 	for(var i=0; i<state.length; i++) {
 	    $('<option value="'+state[i].state+'">' + state[i].state + '</option>').appendTo('#state');
-	}
+	    var districtZones = [];
+	    var a=0,c=0,r=0,d=0;
+		for(var j=0; j<state[i].districtData.length; j++){
+			var object = {};
+			if(state[i].districtData[j].district.includes('Other'))
+				state[i].districtData[j].district = 'Unknown';
+			object["district"] = state[i].districtData[j].district; 
+			object["confirmed"] = state[i].districtData[j].confirmed;
+			object["active"] = state[i].districtData[j].active;
+			object["recovered"] = state[i].districtData[j].recovered;
+			object["deceased"] = state[i].districtData[j].deceased;
+			object["zone"] = zones[state[i].state][state[i].districtData[j].district];
+			c+=state[i].districtData[j].confirmed;
+			a+=state[i].districtData[j].active;
+			r+=state[i].districtData[j].recovered;
+			d+=state[i].districtData[j].deceased;
+			districtZones.push(object);
+			delete zones[state[i].state][state[i].districtData[j].district];
+		}
+		for(var key in zones[state[i].state]){
+			var object = {};
+			object["district"] = key;
+			object["confirmed"] = "---";
+			object["active"] = "---";
+			object["recovered"] = "---";
+			object["deceased"] = "---";
+			object["zone"] = zones[state[i].state][key];
+		}
 
-	const plotStateChart = (chart, ctx, districts, label, count, color) => {
-		chart = new Chart(ctx, {
-			type: 'bar',
-			data: {
-				labels: districts,
-				datasets: [{
-					label: label,
-					data: count,
-					backgroundColor: color,
-					borderColor: [color],
-					strokeColor: [color],
-					borderWidth: 2,
-				}]
-			},
-			options: {
-				responsive: true,
-				maintainAspectRatio: true,
-				aspectRatio: 1.4,
-			},
-		});
-	}
-	var districtZones;
-	const displayGraph = () => {
-		document.getElementById("state-graph-1").innerHTML = `
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="stateConfirmed"></canvas></div>
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="stateRecovered"></canvas></div>
-		`;
-		document.getElementById("state-graph-2").innerHTML = `
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="stateActive"></canvas></div>
-			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><canvas id="stateDeceased"></canvas></div>
-		`;
-		const stc = document.getElementById('stateConfirmed').getContext('2d');
-		const sta = document.getElementById('stateActive').getContext('2d');
-		const str = document.getElementById('stateRecovered').getContext('2d');
-		const std = document.getElementById('stateDeceased').getContext('2d');
-		for(var i=0; i<state.length; i++) {
-			if(state[i].state===document.getElementById('state').value){
-				districts = [], active = [], recovered = [], confirmed = [], deceased = [], districtZones = {};
-				for(var j=0; j<state[i].districtData.length; j++){
-					if(state[i].districtData[j].district.includes('Other'))
-						state[i].districtData[j].district = 'Unknown';
-					if(state[i].districtData[j].district in zones[state[i].state]){
-						districtZones[state[i].districtData[j].district] = zones[state[i].state][state[i].districtData[j].district];
-						delete zones[state[i].state][state[i].districtData[j].district];
-					}
-					districts.push(state[i].districtData[j].district);
-					active.push(state[i].districtData[j].active);
-					confirmed.push(state[i].districtData[j].confirmed);
-					recovered.push(state[i].districtData[j].recovered);
-					deceased.push(state[i].districtData[j].deceased);
-				}
-				plotStateChart(state_confirmed, stc, districts, 'Confirmed Cases', confirmed, '#0000F7');
-				plotStateChart(state_active, sta, districts, 'Active Cases', active, '#FF093C');
-				plotStateChart(state_recovered, str, districts, 'Recovered Cases', recovered, '#29A746');
-				plotStateChart(state_deceased, std, districts, 'Deceased Cases', deceased, '#6A727A');
-				document.getElementById('state-data').innerHTML = `
-					<div class="outer">
-						<div class="inner">
-							<ul style="list-style-type:square;">
-								<li>Total ${districts.length} districts affected in ${state[i].state}</li>
-								<li>Total ${state_test[state[i].state]} number of tests conducted in ${state[i].state}</li>
-							</ul>
+		$('#data-table').append(`
+			<tr class="accordion-toggle collapsed" id="row${i}" data-toggle="collapse" data-parent="#row${i}" href="#collapse${i}">
+  					<td class="text-left"><span class="expand-button mx-2"></span>${state[i].state}</td>
+  					<td>${c}</td>
+  					<td>${a}</td>
+  					<td>${r}</td>
+  					<td>${d}</td>
+  			</tr>
+  			<tr class="hide-table-padding">
+				<td colspan="5">
+					<div id="collapse${i}" class="collapse table-responsive-sm table-responsive-xs">
+						<div class="container">
+							<div class="card text-center">
+								<div class="card-header text-white bg-primary">Total tests conducted: ${state_test[state[i].state]}</div>
+								<div class="card-body">
+									<table class="table" id="state${i}">
+										<thead>
+											<th class="text-left" scope="col">Zonal District</th>
+											<th scope="col">Confirmed</th>
+											<th scope="col">Active</th>
+											<th scope="col">Recovered</th>
+											<th scope="col">Deceased</th>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
-					<br>
-					<div class="table-responsive-sm table-responsive-xs">
-						<table class="table table-dark" id="state-data-table">
-							<thead>
-							    <tr>
-							      <th scope="col">Zone & District</th>
-							      <th scope="col">C</th>
-							      <th scope="col">A</th>
-							      <th scope="col">R</th>
-							      <th scope="col">D</th>
-							    </tr>
-							</thead>
-							<tbody>
-							</tbody>
-						</table>
-					</div>
-				`;
-				var cs = 0, as = 0, rs = 0, ds = 0;
-				for(var k=0; k<districts.length; k++){
-					cs+=confirmed[k];
-					as+=active[k];
-					rs+=recovered[k];
-					ds+=deceased[k];
-					$('#state-data-table').append(`
-						<tr>
-	      					<th scope="row" style="text-align: left;"><span class="mr-2" style="display: inline-block; width: 20px; height: 20px; background-color:${districtZones[districts[k]]}"></span>${districts[k]}</th>
-	      					<td>${confirmed[k]}</td>
-	      					<td>${active[k]}</td>
-	      					<td>${recovered[k]}</td>
-	      					<td>${deceased[k]}</td>
-	      				</tr>
-					`);
-				}
-				for(var key in zones[state[i].state]){
-					$('#state-data-table').append(`
-						<tr>
-	      					<th scope="row" style="text-align: left;"><span class="mr-2" style="display: inline-block; width: 20px; height: 20px; background-color:${zones[state[i].state][key]}"></span>${key}</th>
-	      					<td>---</td>
-	      					<td>---</td>
-	      					<td>---</td>
-	      					<td>---</td>
-	      				</tr>
-					`);
-				}
-				$('#state-data-table').append(`
-					<tr>
-      					<th scope="row">Total</th>
-      					<td>${cs}</td>
-      					<td>${as}</td>
-      					<td>${rs}</td>
-      					<td>${ds}</td>
-      				</tr>
-				`);
-			}
+				</td>
+			</tr>
+		`);
+		for(var k=0; k<districtZones.length; k++){
+			$(`#state${i}`).append(`
+				<tr>
+					<th class="text-left" scope="row" style="color: ${districtZones[k]["zone"]}">${districtZones[k]["district"]}</th>
+					<td style="padding: 1.5%;">${districtZones[k]["confirmed"]}</td>
+					<td style="padding: 1.5%;">${districtZones[k]["active"]}</td>
+					<td style="padding: 1.5%;">${districtZones[k]["recovered"]}</td>
+					<td style="padding: 1.5%;">${districtZones[k]["deceased"]}</td>
+				</tr>
+			`);
 		}
 	}
+	
 </script>
 {% endblock %}
