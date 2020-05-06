@@ -5,24 +5,31 @@
 	tr.hide-table-padding td {
 		padding: 0;
 	}
-	.expand-button {
-		display: inline-block;
-		position: relative;
-	}
-	.accordion-toggle .expand-button:after
-	{
-	  position: absolute;
-	  left: -0.75rem;
-	  top: -0.5rem;
-	  transform: translate(0, -50%);
-	  font-family: "Font Awesome 5 Free";
-	  font-size: 18px;
-	  content: '\f0d7';
-	}
-	.accordion-toggle.collapsed .expand-button:after{
-	   font-family: "Font Awesome 5 Free";
-	   font-size: 18px;
-	   content: "\f0da";
+	@media screen and (min-width: 720px) {
+		.icon { 
+            padding: 10px; 
+            min-width: 40px; 
+        } 
+		.expand-button {
+			display: inline-block;
+			position: relative;
+			margin: 0% 3%;
+		}
+		.accordion-toggle .expand-button:after
+		{
+		  position: absolute;
+		  left: -0.75rem;
+		  top: -0.5rem;
+		  transform: translate(0, -50%);
+		  font-family: "Font Awesome 5 Free";
+		  font-size: 18px;
+		  content: '\f0d7';
+		}
+		.accordion-toggle.collapsed .expand-button:after{
+		   font-family: "Font Awesome 5 Free";
+		   font-size: 18px;
+		   content: "\f0da";
+		}	
 	}
 </style>
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="onload-modal" style="top: 15vh; font-family: Roboto; font-size: 1.2rem;">
@@ -72,8 +79,8 @@
 </div>
 <br>
 <div class="container">	
-	<div class="outer">
-		<div class="inner">
+	<div class="outer bg-primary border border-info rounded-lg rounded-sm">
+		<div class="inner bg-white border border-primary rounded-lg rounded-sm shadow m-3 p-3">
 			<ul style="list-style-type:square;">
 				<li>{{days}} days passed since First Corona case in India was reported (30th January, 2020)</li>
 			  	<li>{{totaltested}} number of tests conducted in India</li>
@@ -179,9 +186,20 @@
 		<div class="card-header text-white bg-primary">
 			Indian States
 		</div>
-		<div class="card-body" id="data"></div>
+		<div class="card-body text-center" id="data">
+			<div class="row">
+				<div class="col-md-6 col-lg-6"></div>
+				<div class="input-group col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-2">
+					<input class="form-control py-2 border-right-0 border" type="search" id="stateInput" name="search" onkeyup="findState()" placeholder="Search State">
+					<span class="input-group-append">
+		                <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
+		            </span>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
+
 {% include 'footer.html' %}
 <script>
 	$(window).on('load',function(){
@@ -252,9 +270,9 @@
 	// Total Deceased
 	plotChart(chart_td, ctx_td, 'Total Deceased', 'totaldeceased', '#6D767E', options);
 
-	document.getElementById('data').innerHTML = `
+	document.getElementById('data').innerHTML += `
 		<div class="table-responsive-sm table-responsive-xs">
-			<table class="table text-nowrap" id="data-table">
+			<table class="table text-wrap" id="data-table">
 				<thead>
 				    <tr>
 				      <th class="text-left mx-2" scope="col">State</th>
@@ -269,7 +287,6 @@
 			</table>
 		</div>
 	`;
-	console.log(zones);
 	for(var i=0; i<state.length; i++) {
 	    $('<option value="'+state[i].state+'">' + state[i].state + '</option>').appendTo('#state');
 	    var districtZones = [];
@@ -303,7 +320,7 @@
 
 		$('#data-table').append(`
 			<tr class="accordion-toggle collapsed" id="row${i}" data-toggle="collapse" data-parent="#row${i}" href="#collapse${i}">
-  					<td class="text-left"><span class="expand-button mx-2"></span>${state[i].state}</td>
+  					<th class="text-left" scope="row"><span class="expand-button text-break text-justify"></span>${state[i].state}</th>
   					<td>${c}</td>
   					<td>${a}</td>
   					<td>${r}</td>
@@ -316,8 +333,17 @@
 							<div class="card text-center">
 								<div class="card-header text-white bg-primary">Total tests conducted: ${state_test[state[i].state]}</div>
 								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6 col-lg-6"></div>
+										<div class="input-group col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-2">
+											<input class="form-control py-2 border-right-0 border" type="search" id="stateInput${i}" name="search" onkeyup="findDistrict(this)" placeholder="Search District">
+											<span class="input-group-append">
+								                <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
+								            </span>
+										</div>
+									</div>
 									<table class="table" id="state${i}">
-										<thead>
+										<thead class="head-hide">
 											<th class="text-left" scope="col">Zonal District</th>
 											<th scope="col">Confirmed</th>
 											<th scope="col">Active</th>
@@ -336,7 +362,7 @@
 		`);
 		for(var k=0; k<districtZones.length; k++){
 			$(`#state${i}`).append(`
-				<tr>
+				<tr class="dont-hide">
 					<th class="text-left" scope="row" style="color: ${districtZones[k]["zone"]}">${districtZones[k]["district"]}</th>
 					<td style="padding: 1.5%;">${districtZones[k]["confirmed"]}</td>
 					<td style="padding: 1.5%;">${districtZones[k]["active"]}</td>
@@ -345,6 +371,50 @@
 				</tr>
 			`);
 		}
+	}
+	const findState = () => {
+		let input, filter, table, tr, th, i, txtValue;
+		input = document.getElementById("stateInput");
+		filter = input.value.toLowerCase();
+		table = document.getElementById("data-table");
+		tr = table.getElementsByTagName("tr");
+  		for (i = 0; i < tr.length; i++) {
+  			th = tr[i].getElementsByTagName("th")[0];
+  			if (th) {
+  				txtValue = th.textContent || th.innerText;
+  				if (txtValue.toLowerCase().indexOf(filter) > -1) 
+  					tr[i].style.display = "";
+  				else {
+  					if (tr[i].className=="hide-table-padding" || tr[i].className=="dont-hide")
+  						tr[i].style.display = "";
+  					else
+  						tr[i].style.display = "none";
+  				}
+  			}
+  		}
+  		let hidden = document.getElementsByClassName('head-hide');
+  		for (var j=0; j<hidden.length; j++){
+  			hidden[j].firstElementChild.style.display = "";
+		}
+	}
+
+	const findDistrict = (ele) => {
+		let input, filter, table, tr, th, i, txtValue;
+		input = document.getElementById(ele.id);
+		filter = input.value.toLowerCase();
+		table = document.getElementById(`state${ele.id.substring(10)}`);
+		tr = table.getElementsByTagName("tr");
+  		for (i = 0; i < tr.length; i++) {
+  			th = tr[i].getElementsByTagName("th")[0];
+  			if (th) {
+  				txtValue = th.textContent || th.innerText;
+  				console.log(txtValue);
+  				if (txtValue.toLowerCase().indexOf(filter) > -1) 
+  					tr[i].style.display = "";
+  				else 
+  					tr[i].style.display = "none";
+  			}
+  		}
 	}
 	
 </script>
