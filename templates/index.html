@@ -183,20 +183,8 @@
 <br>
 <div class="container">
 	<div class="card text-center">
-		<div class="card-header text-white bg-primary">
-			Indian States
-		</div>
-		<div class="card-body text-center" id="data">
-			<div class="row">
-				<div class="col-md-6 col-lg-6"></div>
-				<div class="input-group col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-2">
-					<input class="form-control py-2 border-right-0 border" type="search" id="stateInput" name="search" onkeyup="findState()" placeholder="Search State">
-					<span class="input-group-append">
-		                <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
-		            </span>
-				</div>
-			</div>
-		</div>
+		<div class="card-header text-white bg-primary">Indian States</div>
+		<div class="card-body text-center" id="data"></div>
 	</div>
 </div>
 
@@ -343,12 +331,12 @@
 										</div>
 									</div>
 									<table class="table" id="state${i}">
-										<thead class="head-hide">
+										<thead id="table-header-${i}">
 											<th class="text-left" scope="col">Zonal District</th>
-											<th scope="col">Confirmed</th>
-											<th scope="col">Active</th>
-											<th scope="col">Recovered</th>
-											<th scope="col">Deceased</th>
+											<th scope="col" onclick="sort(0,'state${i}')">Confirmed <i class="fas fa-sort"></i></th>
+											<th scope="col" onclick="sort(1,'state${i}')">Active <i class="fas fa-sort"></i></th>
+											<th scope="col" onclick="sort(2,'state${i}')">Recovered <i class="fas fa-sort"></i></th>
+											<th scope="col" onclick="sort(3,'state${i}')">Deceased <i class="fas fa-sort"></i></th>
 										</thead>
 										<tbody>
 										</tbody>
@@ -362,7 +350,7 @@
 		`);
 		for(var k=0; k<districtZones.length; k++){
 			$(`#state${i}`).append(`
-				<tr class="dont-hide">
+				<tr>
 					<th class="text-left" scope="row" style="color: ${districtZones[k]["zone"]}">${districtZones[k]["district"]}</th>
 					<td style="padding: 1.5%;">${districtZones[k]["confirmed"]}</td>
 					<td style="padding: 1.5%;">${districtZones[k]["active"]}</td>
@@ -372,49 +360,64 @@
 			`);
 		}
 	}
-	const findState = () => {
-		let input, filter, table, tr, th, i, txtValue;
-		input = document.getElementById("stateInput");
-		filter = input.value.toLowerCase();
-		table = document.getElementById("data-table");
-		tr = table.getElementsByTagName("tr");
-  		for (i = 0; i < tr.length; i++) {
-  			th = tr[i].getElementsByTagName("th")[0];
-  			if (th) {
-  				txtValue = th.textContent || th.innerText;
-  				if (txtValue.toLowerCase().indexOf(filter) > -1) 
-  					tr[i].style.display = "";
-  				else {
-  					if (tr[i].className=="hide-table-padding" || tr[i].className=="dont-hide")
-  						tr[i].style.display = "";
-  					else
-  						tr[i].style.display = "none";
-  				}
-  			}
-  		}
-  		let hidden = document.getElementsByClassName('head-hide');
-  		for (var j=0; j<hidden.length; j++){
-  			hidden[j].firstElementChild.style.display = "";
-		}
-	}
 
 	const findDistrict = (ele) => {
-		let input, filter, table, tr, th, i, txtValue;
+		let input, filter, table, tr, th, i, txtValue, id;
 		input = document.getElementById(ele.id);
 		filter = input.value.toLowerCase();
-		table = document.getElementById(`state${ele.id.substring(10)}`);
+		id = ele.id.substring(10);
+		table = document.getElementById(`state${id}`);
 		tr = table.getElementsByTagName("tr");
+		let header = document.getElementById(`table-header-${id}`);
   		for (i = 0; i < tr.length; i++) {
   			th = tr[i].getElementsByTagName("th")[0];
   			if (th) {
   				txtValue = th.textContent || th.innerText;
-  				console.log(txtValue);
   				if (txtValue.toLowerCase().indexOf(filter) > -1) 
   					tr[i].style.display = "";
   				else 
   					tr[i].style.display = "none";
   			}
   		}
+  		header.childNodes[1].style.display="";
+	}
+
+	function sort(n,table) {		
+		var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+		switching = true;
+		var table = document.getElementById(table);
+  		dir = "asc";
+  		while (switching) {
+    		switching = false;
+    		rows = table.rows;
+    		for (i = 1; i <rows.length-1; i++) {
+			    shouldSwitch = false;
+			    x = rows[i].getElementsByTagName("td")[n];
+			    y = rows[i+1].getElementsByTagName("td")[n];
+      			if (dir == "asc") {
+      				if (parseInt(x.innerHTML.toLowerCase()) > parseInt(y.innerHTML.toLowerCase())) {
+          				shouldSwitch = true;
+          				break;
+      				}
+  				} 
+  				else if (dir == "desc") {
+  					if (parseInt(x.innerHTML.toLowerCase()) < parseInt(y.innerHTML.toLowerCase())) {
+	          			shouldSwitch = true;
+	          			break;
+      				}
+  				}
+			}
+			if (shouldSwitch) {
+		    	rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+		    	switching = true;
+      			switchcount ++;
+  			} else {
+      			if (switchcount == 0 && dir == "asc") {
+      				dir = "desc";
+      				switching = true;
+      			}
+  			}
+		}
 	}
 	
 </script>

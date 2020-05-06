@@ -19,15 +19,16 @@ jd = r.json()
 res = requests.get(url=os.getenv('RESOURCES_URL'))
 api_key = os.getenv('GEOCODING_KEY') # for getting api key of places API
 state_data = requests.get(url=os.getenv('STATE_URL')).json()
-t = requests.get(url="https://api.covid19india.org/state_test_data.json").json()['states_tested_data']
-zone_data = requests.get(url="https://api.covid19india.org/zones.json").json()['zones']
+t = requests.get(url=os.getenv('TEST_URL')).json()['states_tested_data']
+zone_data = requests.get(url=os.getenv('ZONE_URL')).json()['zones']
+news_data = requests.get(url=(os.getenv('NEWS_URL')+os.getenv('NEWS_API'))).json()['articles']
 
 state_test = dict()
 maxTest = -1
 state = ""
 for i in range(len(t)): 
 	if t[i]['totaltested'] != '':
-		state_test[t[i]['state']] =  int(t[i]['totaltested'])
+		state_test[t[i]['state']] = int(t[i]['totaltested'])
 	
 for s in state_test:
 	temp = max(maxTest, state_test[s])
@@ -194,5 +195,10 @@ def donate():
 @app.route("/map")
 def map():
 	return render_template('map.html', data=json_state_data)
+
+@app.route("/news")
+def news():
+	return render_template('news.html', news=news_data)
+
 if __name__ == "__main__":
     app.run(debug=True)

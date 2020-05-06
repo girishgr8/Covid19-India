@@ -1,0 +1,48 @@
+{% include 'layout.html' %}
+{% block content %}
+<style type="text/css">
+	.col-sm-12, .col-xs-12{
+		margin: 2% 0%;
+	}
+</style>
+<div class="container my-3">
+	{% for i in range(0, news|length-1, 2) %}
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 d-flex align-items-stretch">
+				<div class="card border-primary">
+					<img src="{{ news[i].urlToImage }}" class="card-img-top">
+					<div class="card-body">
+						<h5 class="card-title text-justify text-left">{{news[i].title}}</h5>
+						<p class="card-text">{{news[i].description}}</p>
+						<p class="card-text text-right">
+							<a href="{{ news[i].url }}" class="btn btn-primary">Read Article →</a>
+						</p>
+						<p class="card-text text-left text-muted">- {{news[i].source.name}}</p>
+					</div>
+					<div class="card-footer text-muted">{{news[i].publishedAt[0:10]}} {{news[i].publishedAt[11:19]}}</div>
+				</div>			
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 d-flex align-items-stretch">
+				<div class="card border-primary">
+					<img src="{{ news[i+1].urlToImage }}" class="card-img-top">
+					<div class="card-body">
+						<h5 class="card-title text-justify text-left">{{news[i+1].title}}</h5>
+						<p class="card-text">{{news[i+1].description}}</p>
+						<p class="card-text text-right">
+							<a href="{{ news[i+1].url }}" class="btn btn-primary">Read Article →</a>
+						</p>
+						<p class="card-text text-left text-muted">- {{news[i+1].source.name}}</p>
+					</div>
+					<div class="card-footer text-muted">{{news[i+1].publishedAt[0:10]}} {{news[i+1].publishedAt[11:19]}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	{% endfor %}
+	
+</div>
+{% endblock %}
+
+{% include 'footer.html' %}
