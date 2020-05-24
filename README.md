@@ -41,4 +41,4 @@ Open to enhancements & bug-fixes 😄
 **This project was developed to make best use of time during Covid-19 Lockdown and explore Chart.js library, API calls and SlackBot Integration**
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/girishgr8/Covid19-India/blob/master/README.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/girishgr8/Covid19-India/blob/master/LICENSE) file for details
