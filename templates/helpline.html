@@ -1,12 +1,17 @@
 {% include 'layout.html' %}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+<link
+	rel="stylesheet"
+	href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+/>
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
 <style type="text/css">
 	body {
-	    padding: 0;
-	    margin: 0;
+		padding: 0;
+		margin: 0;
 	}
-	html, body, #map{
+	html,
+	body,
+	#map {
 		height: 100vh;
 		width: 100vw;
 	}
@@ -16,25 +21,25 @@
 <div id="map"></div>
 {% include 'footer.html' %}
 <script type="text/javascript">
-	
+
 	var latitude, longitude, marker, map = L.map('map').setView([19.43, 72.44],8);
 	L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
 	    maxZoom: 20,
 	    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 	}).addTo(map);
-	
+
 	var data = JSON.parse({{ data | tojson | safe }});
-	
+
 	if(navigator.geolocation) navigator.geolocation.getCurrentPosition(showPosition);
 	else alert("Geolocation is not supported by this browser.");
-	
+
 	function showPosition(pos) {
 		latitude = pos.coords.latitude, longitude = pos.coords.longitude;
-		console.log()
+		latitude = 19.21667; longitude = 73.08333;
 		map.setView([latitude, longitude], 8);
 		marker = L.marker([latitude, longitude]).bindPopup("<b>Your location!</b>").addTo(map);
 	}
-	
+
 	var icon = L.icon({
 	    iconUrl: 'https://www.freeiconspng.com/uploads/help-icon-3.png',
 	    iconSize: [35, 35], // size of the icon
@@ -43,6 +48,5 @@
 	for (var i = 0; i<data.length; i++) {
 		marker = L.marker([parseInt(data[i]['lat']), parseInt(data[i]['lng'])], {icon: icon}).bindPopup(`<b>Name:</b> ${data[i]['name']}<br><b>Description:</b> ${data[i]['descr']}<br><b>Phone:</b> ${data[i]['phone']}<br><b>Link:</b> <a href="${data[i]['contact']}">${data[i]['contact']}</a>`).addTo(map);
 	}
-
 </script>
 {% endblock %}

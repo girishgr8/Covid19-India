@@ -288,13 +288,17 @@
 			object["active"] = state[i].districtData[j].active;
 			object["recovered"] = state[i].districtData[j].recovered;
 			object["deceased"] = state[i].districtData[j].deceased;
-			object["zone"] = zones[state[i].state][state[i].districtData[j].district];
+			try{
+				object["zone"] = zones[state[i].state][state[i].districtData[j].district];
+			}catch(err){}
+			
 			c+=state[i].districtData[j].confirmed;
 			a+=state[i].districtData[j].active;
 			r+=state[i].districtData[j].recovered;
 			d+=state[i].districtData[j].deceased;
 			districtZones.push(object);
-			delete zones[state[i].state][state[i].districtData[j].district];
+			try{ delete zones[state[i].state][state[i].districtData[j].district];}
+			catch(err){}
 		}
 		for(var key in zones[state[i].state]){
 			var object = {};

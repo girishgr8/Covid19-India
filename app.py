@@ -9,6 +9,7 @@ import csv
 import math
 from dotenv import load_dotenv
 from flask_moment import Moment
+from difflib import SequenceMatcher
 load_dotenv()
 
 app = Flask(__name__)
@@ -22,6 +23,16 @@ state_data = requests.get(url=os.getenv('STATE_URL')).json()
 t = requests.get(url=os.getenv('TEST_URL')).json()['states_tested_data']
 zone_data = requests.get(url=os.getenv('ZONE_URL')).json()['zones']
 news_data = requests.get(url=(os.getenv('NEWS_URL')+os.getenv('NEWS_API'))).json()['articles']
+
+payload = {"key": "{}".format(os.getenv('KEY')),"lng": 73.0933867, "lat": 19.220705199999998, "radius": 1000}
+headers = {
+  'accept': 'application/json',
+  'Content-Type': 'application/json',
+  'Content-Type': 'application/json'
+}
+
+def similar(a, b):
+	return SequenceMatcher(None, a, b).ratio()
 
 state_test = dict()
 maxTest = -1
