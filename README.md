@@ -26,7 +26,7 @@ Open  this url in your browser :  http://localhost:5000
 - [x] Top and latest news update
 
 ## Demo
-![Demo](https://drive.google.com/open?id=1ZBaW7JmF0rfHwewgeE__yeOUXD2rxdc_)
+![Demo](https://github.com/girishgr8/Covid19-India/blob/master/demo/demo.gif)
 <p align="center">
   <img src="https://github.com/girishgr8/Covid19-India/blob/master/demo/bot.jpeg" width="320px" height="480px">
 </p>
@@ -34,12 +34,11 @@ Open  this url in your browser :  http://localhost:5000
 ## Contributing
 Open to enhancements & bug-fixes 😄
 
-
 ## Improvements
 - [ ] Add districtwise heatmap for each state
 - [ ] Convert to PWA
 
-**This project was developed to make best use of time and explore Chart.js library and SlackBot Integration**
+**This project was developed to make best use of time during Covid-19 Lockdown and explore Chart.js library, API calls and SlackBot Integration**
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/girishgr8/Covid19-India/blob/master/README.md) file for details
