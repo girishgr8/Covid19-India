@@ -2,7 +2,7 @@
 **Get all stats, updates and help for Covid-19 India**
 
 ![made-with-python](https://img.shields.io/badge/Made%20With-Python-red?style=for-the-badge&logo=Python)
-![made-with-flask](https://img.shields.io/badge/Made%20With-Flask-blue?style=for-the-badge&logo=Flask) ![hosted-on-heroku](http://img.shields.io/badge/Deplyed%20on-Heroku-blueviolet?style=for-the-badge&logo=Heroku)
+![made-with-flask](https://img.shields.io/badge/Made%20With-Flask-blue?style=for-the-badge&logo=Flask) ![made-with-javascript](http://img.shields.io/badge/Made%20with-JavaScript-yellow?style=for-the-badge&logo=Javascript) ![hosted-on-heroku](http://img.shields.io/badge/Deplyed%20on-Heroku-blueviolet?style=for-the-badge&logo=Heroku)
 
 ## Getting Started
 Clone this repository and follow steps below:
@@ -26,7 +26,7 @@ Open  this url in your browser :  http://localhost:5000
 - [x] Top and latest news update
 
 ## Demo
-![Demo](https://github.com/girishgr8/Covid19-India/blob/master/demo/demo.gif)
+![Demo](https://drive.google.com/open?id=1ZBaW7JmF0rfHwewgeE__yeOUXD2rxdc_)
 <p align="center">
   <img src="https://github.com/girishgr8/Covid19-India/blob/master/demo/bot.jpeg" width="320px" height="480px">
 </p>
