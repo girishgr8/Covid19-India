@@ -23,6 +23,7 @@ Open  this url in your browser :  http://localhost:5000
 - [x] Districtwise zones
 - [x] India's Heatmap according to count
 - [x] Join Slack channel to get updated stats every 1 hour.
+- [x] Top and latest news update
 
 ## Demo
 ![Demo](https://github.com/girishgr8/Covid19-India/blob/master/demo/demo.gif)
@@ -30,9 +31,11 @@ Open  this url in your browser :  http://localhost:5000
   <img src="https://github.com/girishgr8/Covid19-India/blob/master/demo/bot.jpeg" width="320px" height="480px">
 </p>
 
+## Contributing
+Open to enhancements & bug-fixes 😄
+
 
 ## Improvements
-- [ ] Top and latest news update
 - [ ] Add districtwise heatmap for each state
 - [ ] Convert to PWA
 
